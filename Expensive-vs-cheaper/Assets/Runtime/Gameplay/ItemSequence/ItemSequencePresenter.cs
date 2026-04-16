@@ -66,9 +66,7 @@ namespace DoubleB.Runtime.Gameplay
         {
             itemView.Title.text = itemDescription.Title;
             itemView.Icon.style.backgroundImage = new StyleBackground(itemDescription.Icon);
-            itemView.Worth.text = itemDescription.Worth.ToString("$?");
-
-            itemView.Root.style.unityBackgroundImageTintColor = new StyleColor(Random.ColorHSV());
+            itemView.Worth.text = string.Empty;
         }
 
         private void Shift()

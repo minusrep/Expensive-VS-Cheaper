@@ -16,4 +16,4 @@ MonoBehaviour:
   Title: Item_1
   Color: {r: 0, g: 1, b: 0.4497645, a: 1}
   Worth: 2
-  Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  Icon: {fileID: 21300000, guid: ce0b7a426cea0c24da95fc9ba62fe8e8, type: 3}
