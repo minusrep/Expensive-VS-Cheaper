@@ -1,4 +1,6 @@
+using DoubleB.Runtime.Runtime.Descriptions;
 using DoubleB.Runtime.Runtime.ViewDescriptions;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace DoubleB.Runtime.Gameplay
@@ -37,15 +39,36 @@ namespace DoubleB.Runtime.Gameplay
                 _view.Root.Add(itemElement);
             }
 
-            _itemViews[CurrentIndex].Root.style.backgroundColor = _model.CurrentItem.Color;
-            _itemViews[CurrentIndex + 1].Root.style.backgroundColor = _model.NextItem.Color;
-
+            SetupItems();
+            
             _model.OnChange += Shift;
         }
 
         public void Disable()
         {
             _model.OnChange -= Shift;
+        }
+
+        private void SetupItems()
+        {
+            SetupCurrentItem(_itemViews[CurrentIndex], _model.CurrentItem);
+            SetupNextItem(_itemViews[CurrentIndex + 1], _model.NextItem);
+        }
+
+        private void SetupCurrentItem(ItemView itemView, ItemDescription itemDescription)
+        {
+            itemView.Title.text = itemDescription.Title;
+            itemView.Icon.style.backgroundImage = new StyleBackground(itemDescription.Icon);
+            itemView.Worth.text = itemDescription.Worth.ToString("$0");
+        }
+
+        private void SetupNextItem(ItemView itemView, ItemDescription itemDescription)
+        {
+            itemView.Title.text = itemDescription.Title;
+            itemView.Icon.style.backgroundImage = new StyleBackground(itemDescription.Icon);
+            itemView.Worth.text = itemDescription.Worth.ToString("$?");
+
+            itemView.Root.style.unityBackgroundImageTintColor = new StyleColor(Random.ColorHSV());
         }
 
         private void Shift()
@@ -63,9 +86,8 @@ namespace DoubleB.Runtime.Gameplay
             }
             
             _itemViews[^1] = first;
-            
-            _itemViews[CurrentIndex].Root.style.backgroundColor = _model.CurrentItem.Color;
-            _itemViews[CurrentIndex + 1].Root.style.backgroundColor = _model.NextItem.Color;
+        
+            SetupItems();
         }
 
         private void AnimateToPosition(VisualElement element, float targetPercent)

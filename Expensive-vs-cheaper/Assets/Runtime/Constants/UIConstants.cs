@@ -10,5 +10,8 @@ namespace DoubleB.Runtime
         public const string CheaperButton = "cheaper-button";
         public const string Item = "item";
         public const string Content = "content";
+        public const string Worth = "worth";
+        public const string Title = "title";
+        public const string Icon = "icon";
     }
 }

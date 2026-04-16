@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Item
   m_EditorClassIdentifier: DoubleB.Runtime::DoubleB.Runtime.Runtime.Descriptions.ItemDescription
   Id: 3
-  Worth: 0
+  Title: Item_0
   Color: {r: 1, g: 0, b: 0, a: 1}
+  Worth: 0
+  Icon: {fileID: 21300000, guid: 16892b1c8c6beb9498a6f5bf74c93953, type: 3}

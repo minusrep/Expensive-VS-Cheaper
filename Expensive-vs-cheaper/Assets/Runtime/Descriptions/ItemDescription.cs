@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace DoubleB.Runtime.Runtime.Descriptions
 {
@@ -6,7 +7,9 @@ namespace DoubleB.Runtime.Runtime.Descriptions
     public class ItemDescription : ScriptableObject
     {
         public string Id;
-        public ulong Worth;
+        public string Title;
         public Color Color;
+        public ulong Worth;
+        public Sprite Icon;
     }
 }
