@@ -1,9 +1,7 @@
 {
-    "name": "DoubleB.Runtime",
-    "rootNamespace": "DoubleB.Runtime",
+    "name": "UniTask.Linq",
     "references": [
-        "GUID:b1474061129065849bbfbe83082793f0",
-        "GUID:f51ebe6a0ceec4240a699833d6309b23"
+        "UniTask"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
