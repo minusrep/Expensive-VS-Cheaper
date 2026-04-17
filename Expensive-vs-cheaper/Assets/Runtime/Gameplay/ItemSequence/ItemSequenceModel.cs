@@ -1,5 +1,6 @@
 using System;
 using DoubleB.Runtime.Runtime.Descriptions;
+using UnityEngine;
 
 namespace DoubleB.Runtime.Gameplay
 {
@@ -27,14 +28,18 @@ namespace DoubleB.Runtime.Gameplay
             for (var i = 0; i < Items.Length - 1; i++)
             {
                 Items[i] = Items[i + 1];
-                Items[i].Position = Description.GetViewPosition(i);
             }
 
             Items[^1] = first;
-            Items[^1].Position = Description.GetViewPosition(Items.Length - 1);
 
             first.Description = Description.Items.GetRandom();
-            
+
+            for (var i = 0; i < Items.Length; i++)
+            {
+                Items[i].Color.Value = Description.GetViewColor(i);
+                Items[i].Position.Value = Description.GetViewPosition(i);
+            }
+
             OnChange?.Invoke();
         }
     }

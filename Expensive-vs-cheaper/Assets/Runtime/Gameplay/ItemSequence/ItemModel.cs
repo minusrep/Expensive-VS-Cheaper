@@ -1,14 +1,18 @@
 using System;
 using DoubleB.Runtime.Runtime.Descriptions;
+using UniRx;
+using UnityEngine;
 
 namespace DoubleB.Runtime.Gameplay
 {
     public class ItemModel
     {
-        public event Action OnChangePosition;
-        
         public event Action OnChangeDescription;
 
+        public ReactiveProperty<int> Position { get; private set; } = new ReactiveProperty<int>();
+        
+        public ReactiveProperty<Color>  Color { get; private set; } = new ReactiveProperty<Color>();
+        
         public ItemDescription Description
         {
             get => _description;
@@ -20,21 +24,7 @@ namespace DoubleB.Runtime.Gameplay
             }
         }
 
-        public int Position
-        {
-            get => _positon;
-            set
-            {
-                if (_positon == value) return;
-
-                _positon = value;
-                OnChangePosition?.Invoke();
-            }
-        }
-
         private ItemDescription _description;
-        private int _positon;
-        
         
         public ItemModel(ItemDescription description)
         {

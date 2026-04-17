@@ -36,7 +36,8 @@ namespace DoubleB.Runtime.Gameplay
                 
                 _itemPresenters[i] = presenter;
                 _model.Items[i] = model;
-                _model.Items[i].Position = _model.Description.GetViewPosition(i);
+                _model.Items[i].Position.Value = _model.Description.GetViewPosition(i);
+                _model.Items[i].Color.Value = _model.Description.GetViewColor(i);
                 presenter.Enable();
             }
         }

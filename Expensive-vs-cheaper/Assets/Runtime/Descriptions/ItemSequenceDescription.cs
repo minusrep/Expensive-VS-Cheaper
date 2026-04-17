@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using DoubleB.Runtime.Runtime.Descriptions;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace DoubleB.Runtime.Gameplay
 {
@@ -14,15 +13,24 @@ namespace DoubleB.Runtime.Gameplay
 
         [Range(1, 3)] [field: SerializeField] public int CurrentIndex { get; private set; }
 
-        [field: SerializeField] public List<int> Positions { get;  private set; }
+        [field: SerializeField] public List<int> Positions { get; private set; }
+        
+        [field: SerializeField] public List<Color> Colors { get; private set; }
         
         [field: SerializeField] public ItemDescriptionCollection Items { get; private set; }
         
-        public int GetViewPosition(int position)
+        public int GetViewPosition(int index)
         {
-            if (position < 0 || position >= Positions.Count) return -1;
+            if (index < 0 || index >= Positions.Count) return -1;
             
-            return Positions[position];
-        } 
+            return Positions[index];
+        }
+
+        public Color GetViewColor(int index)
+        {
+            if (index < 0 || index >= Colors.Count) return Colors[-1];
+            
+            return Colors[index];
+        }
     }
 }
