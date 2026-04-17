@@ -8,19 +8,19 @@ namespace DoubleB.Runtime
     public class UIRouterPresenter : IPresenter
     {
         private readonly UIAssetCollection _uiAssetCollection;
-        private readonly ItemDescriptionCollection _itemDescriptionCollection;
+        private readonly ItemSequenceDescription _itemSequenceDescription;
         private readonly GameView _view;
         private readonly GameModel _model;
 
         private IPresenter _currentPresenter;
         
         public UIRouterPresenter(GameModel model, GameView view, 
-            UIAssetCollection uiAssetCollection, ItemDescriptionCollection itemDescriptionCollection)
+            UIAssetCollection uiAssetCollection, ItemSequenceDescription itemSequenceDescription)
         {
             _model = model;
             _view = view;
             _uiAssetCollection = uiAssetCollection;
-            _itemDescriptionCollection = itemDescriptionCollection;
+            _itemSequenceDescription = itemSequenceDescription;
         }
 
         public void Enable()
@@ -52,8 +52,7 @@ namespace DoubleB.Runtime
                     break;
                 
                 case UIConstants.Gameplay:
-                    _currentPresenter = new GameplayPresenter(_model.GameplayModel, new GameplayView(root), 
-                        _itemDescriptionCollection, _uiAssetCollection);
+                    _currentPresenter = new GameplayPresenter(_model.GameplayModel, new GameplayView(root), _itemSequenceDescription, _uiAssetCollection);
                     break;
             }
             

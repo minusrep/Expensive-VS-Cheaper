@@ -326,7 +326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: DoubleB.Runtime::DoubleB.Runtime.Bootstrapper
   _uiDocument: {fileID: 1185096336}
   _uiAssetCollection: {fileID: 11400000, guid: e1ede30d5eabb934fbb161995ad3087a, type: 2}
-  _itemDescriptionCollection: {fileID: 11400000, guid: 1107feaa2b21cab4dba4ca3049b24ae1, type: 2}
+  _itemSequenceDescription: {fileID: 11400000, guid: a9286e067168e7a429df748bfe9f4940, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

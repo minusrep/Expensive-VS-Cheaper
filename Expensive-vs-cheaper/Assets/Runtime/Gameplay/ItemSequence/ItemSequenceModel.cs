@@ -7,24 +7,34 @@ namespace DoubleB.Runtime.Gameplay
     {
         public event Action OnChange;
 
-        public ItemDescription CompleteItem { get; private set; }
-
-        public ItemDescription CurrentItem { get; private set; }
-
-        public ItemDescription NextItem { get; private set; }
-
-        public ItemSequenceModel(ItemDescription currentItem, ItemDescription nextItem)
+        public ItemModel CurrentItem => Items[Description.CurrentIndex];
+        public ItemModel NextItem => Items[Description.NextIndex];
+        
+        public ItemModel[] Items { get; private set; }
+        
+        public ItemSequenceDescription Description { get; private set; }
+        
+        public ItemSequenceModel(ItemSequenceDescription description)
         {
-            CurrentItem = currentItem;
-            NextItem = nextItem;
+            Description = description;
+            Items = new ItemModel[description.Capacity];
         }
 
-
-        public void Next(ItemDescription nextItem)
+        public void Next()
         {
-            CompleteItem = CurrentItem;
-            CurrentItem = NextItem;
-            NextItem = nextItem;
+            var first = Items[0];
+
+            for (var i = 0; i < Items.Length - 1; i++)
+            {
+                Items[i] = Items[i + 1];
+                Items[i].Position = Description.GetViewPosition(i);
+            }
+
+            Items[^1] = first;
+            Items[^1].Position = Description.GetViewPosition(Items.Length - 1);
+
+            first.Description = Description.Items.GetRandom();
+            
             OnChange?.Invoke();
         }
     }
