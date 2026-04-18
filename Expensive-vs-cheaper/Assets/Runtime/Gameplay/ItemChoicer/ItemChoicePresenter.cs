@@ -34,6 +34,8 @@ namespace DoubleB.Runtime.Gameplay
             _model.OnInteractionChanged -= OnInteractionChanged;
             _view.SelectMoreExpensiveButton.clicked -= SelectMoreExpensive;
             _view.SelectCheaperButton.clicked -= SelectCheaper;
+            DOTween.Kill(_view.SelectMoreExpensiveButton);
+            DOTween.Kill(_view.SelectCheaperButton);
         }
 
         private void OnInteractionChanged(bool newValue)

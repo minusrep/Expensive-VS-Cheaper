@@ -42,10 +42,15 @@ namespace DoubleB.Runtime.Gameplay
                 _model.Items[i].Color.Value = _model.Description.GetViewColor(i);
                 presenter.Enable();
             }
+
+            _model.OnChange += UpdateIconSwayAnimations;
+            UpdateIconSwayAnimations();
         }
 
         public void Disable()
         {
+            _model.OnChange -= UpdateIconSwayAnimations;
+
             foreach (var presenter in _itemPresenters)
             {
                 presenter.Disable();
@@ -57,6 +62,17 @@ namespace DoubleB.Runtime.Gameplay
             _model.Next();
 
             await UniTask.WhenAll(_itemPresenters.Select(x => x.WaitForAnimationAsync()));
+        }
+
+        private void UpdateIconSwayAnimations()
+        {
+            foreach (var presenter in _itemPresenters)
+            {
+                var isCurrent = ReferenceEquals(presenter.Model, _model.CurrentItem);
+                var isNext = ReferenceEquals(presenter.Model, _model.NextItem);
+
+                presenter.SetIconSwayEnabled(isCurrent || isNext);
+            }
         }
     }
 }

@@ -8,12 +8,18 @@ namespace DoubleB.Runtime.Gameplay
 {
     public class ItemPresenter : IPresenter
     {
+        private const float IconSwayAngle = 6f;
+        private const float IconSwayDuration = 0.8f;
+
+        public ItemModel Model => _model;
+
         private readonly ItemModel _model;
         private readonly ItemView _view;
 
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
 
         private UniTask CurrentAnimationTask = UniTask.CompletedTask;
+        private bool _isIconSwayEnabled;
         
         public ItemPresenter(ItemModel model, ItemView view)
         {
@@ -38,6 +44,8 @@ namespace DoubleB.Runtime.Gameplay
         {
             _disposables.Dispose();
             _model.OnChangeDescription -= HandleDescription;
+            StopIconSway();
+            DOTween.Kill(_view.Root);
         }
 
         private void HandlePosition()
@@ -93,6 +101,45 @@ namespace DoubleB.Runtime.Gameplay
         public UniTask WaitForAnimationAsync()
         {
             return CurrentAnimationTask;
+        }
+
+        public void SetIconSwayEnabled(bool enabled)
+        {
+            if (_isIconSwayEnabled == enabled)
+            {
+                return;
+            }
+
+            _isIconSwayEnabled = enabled;
+
+            if (enabled)
+            {
+                StartIconSway();
+                return;
+            }
+
+            StopIconSway();
+        }
+
+        private void StartIconSway()
+        {
+            DOTween.Kill(_view.Icon);
+            _view.Icon.style.rotate = new Rotate(new Angle(-IconSwayAngle, AngleUnit.Degree));
+
+            DOTween.To(
+                    () => _view.Icon.resolvedStyle.rotate.angle.value,
+                    x => _view.Icon.style.rotate = new Rotate(new Angle(x, AngleUnit.Degree)),
+                    IconSwayAngle,
+                    IconSwayDuration)
+                .SetId(_view.Icon)
+                .SetEase(Ease.InOutSine)
+                .SetLoops(-1, LoopType.Yoyo);
+        }
+
+        private void StopIconSway()
+        {
+            DOTween.Kill(_view.Icon);
+            _view.Icon.style.rotate = new Rotate(new Angle(0, AngleUnit.Degree));
         }
     }
 }
