@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a8378d76c7469bb329cc1107bdc8c9, type: 3}
   m_Name: DescriptionCollection
   m_EditorClassIdentifier: DoubleB.Runtime::DoubleB.Runtime.Runtime.Descriptions.DescriptionCollection
-  <ItemSequence>k__BackingField: {fileID: 0}
+  <ItemSequence>k__BackingField: {fileID: 11400000, guid: a9286e067168e7a429df748bfe9f4940, type: 2}

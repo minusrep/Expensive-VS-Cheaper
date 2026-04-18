@@ -5,27 +5,23 @@ namespace DoubleB.Runtime.Gameplay
 {
     public class GameplayPresenter : IPresenter
     {
-        private readonly ItemSequenceDescription _itemSequenceDescription;
-        
         private readonly UIAssetCollection _uiAssetCollection;
         private readonly GameplayView _view;
-        private GameplayModel _model;
+        private readonly GameplayModel _model;
 
         private ItemSequencePresenter _itemSequencePresenter;
 
-        public GameplayPresenter(GameplayModel model, GameplayView view, ItemSequenceDescription itemSequenceDescription, UIAssetCollection uiAssetCollection)
+        public GameplayPresenter(GameplayModel model, GameplayView view, UIAssetCollection uiAssetCollection)
         {
             _model = model;
             _view = view;
             _uiAssetCollection = uiAssetCollection;
-            _itemSequenceDescription = itemSequenceDescription;
         }
 
         public void Enable()
         {
-            var itemSequence = new ItemSequenceModel(_itemSequenceDescription);
-            _model = new GameplayModel(itemSequence);
-
+            _model.Reset();
+            
             var itemSequenceView = new ItemSequenceView(_view.Root.Q<VisualElement>(UIConstants.Content));
             _itemSequencePresenter = new ItemSequencePresenter(_model.ItemSequence, itemSequenceView, _uiAssetCollection);
             _itemSequencePresenter.Enable();
@@ -48,6 +44,10 @@ namespace DoubleB.Runtime.Gameplay
             {
                 _model.ItemSequence.Next();
             }
+            else
+            {
+                _model.Lose();
+            }
         }
 
         private void SelectCheaper()
@@ -57,6 +57,10 @@ namespace DoubleB.Runtime.Gameplay
             if (success)
             {
                 _model.ItemSequence.Next();
+            }
+            else
+            {
+                _model.Lose();
             }
         }
     }

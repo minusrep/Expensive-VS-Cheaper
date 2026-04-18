@@ -8,6 +8,8 @@ namespace DoubleB.Runtime
 
         private readonly UIWindowRouterModel _model;
         
+        private Button _startSessionButton;
+        
         public MainMenuPresenter(UIWindowRouterModel model, MainMenuView view)
         {
             _view = view;
@@ -16,17 +18,19 @@ namespace DoubleB.Runtime
 
         public void Enable()
         {
-            _view.Root.Q<Button>(UIConstants.StartButton).clicked += StartSession;
+            _startSessionButton = _view.Root.Q<Button>(UIConstants.StartButton);
+             
+            _startSessionButton.clicked += StartSession;
         }
 
         public void Disable()
         {
-            _view.Root.Q<Button>(UIConstants.StartButton).clicked -= StartSession;
+            _startSessionButton.clicked -= StartSession;
         }
 
         private void StartSession()
         {
-            _model.ChangeState(UIConstants.Gameplay);
+            _model.ChangeState(UIConstants.Windows.Gameplay);
         }
     }
 }

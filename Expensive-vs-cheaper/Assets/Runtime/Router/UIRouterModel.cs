@@ -6,51 +6,25 @@ namespace DoubleB.Runtime
     {
         public UIWindowRouterModel WindowRouterModel { get; private set; }
         public UIPopupRouterModel PopupRouterModel { get; private set; }
+        
+        public event Action OnRestartRequested;
+
+        public event Action OnExitToMainMenuRequested;
 
         public UIRouterModel(string startWindow)
         {
             WindowRouterModel = new UIWindowRouterModel(startWindow);
             PopupRouterModel = new UIPopupRouterModel();
         }
-    }
 
-    public class UIPopupRouterModel 
-    {
-        public event Action OnChangeState;
-        
-        public string CurrentState { get; private set; }
-
-        public void Invoke(string state)
+        public void RequestRestart()
         {
-            CurrentState = state;
-            OnChangeState?.Invoke();
+            OnRestartRequested?.Invoke();
         }
 
-        public void Hide()
+        public void RequestExitToMainMenu()
         {
-            CurrentState = string.Empty;
-            OnChangeState?.Invoke();
-        }
-    }
-
-    public class UIWindowRouterModel
-    {
-        public event Action OnChangeState;
-        
-        public string CurrentState { get; private set; }
-        
-        public string PreviousState { get; private set; }
-
-        public UIWindowRouterModel(string currentState)
-        {
-            CurrentState = currentState;
-        }
-
-        public void ChangeState(string newState)
-        {
-            PreviousState = CurrentState;
-            CurrentState = newState;
-            OnChangeState?.Invoke();
+            OnExitToMainMenuRequested?.Invoke();
         }
     }
 }

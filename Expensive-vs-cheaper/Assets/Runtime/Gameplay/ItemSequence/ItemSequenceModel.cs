@@ -21,6 +21,11 @@ namespace DoubleB.Runtime.Gameplay
             Items = new ItemModel[description.Capacity];
         }
 
+        public void Reset()
+        {
+            Items = new ItemModel[Description.Capacity];
+        }
+
         public void Next()
         {
             var first = Items[0];
