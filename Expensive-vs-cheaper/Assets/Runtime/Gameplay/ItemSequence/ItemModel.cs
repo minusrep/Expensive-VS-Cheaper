@@ -3,7 +3,7 @@ using DoubleB.Runtime.Runtime.Descriptions;
 using UniRx;
 using UnityEngine;
 
-namespace DoubleB.Runtime.Gameplay
+namespace DoubleB.Runtime.Runtime.Gameplay.ItemSequence
 {
     public class ItemModel
     {

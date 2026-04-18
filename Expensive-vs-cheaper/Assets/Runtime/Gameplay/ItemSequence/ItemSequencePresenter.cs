@@ -1,10 +1,10 @@
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using DoubleB.Runtime.Runtime.Descriptions;
+using DoubleB.Runtime.Runtime.Constants;
+using DoubleB.Runtime.Runtime.Core;
 using DoubleB.Runtime.Runtime.ViewDescriptions;
 using UnityEngine.UIElements;
 
-namespace DoubleB.Runtime.Gameplay
+namespace DoubleB.Runtime.Runtime.Gameplay.ItemSequence
 {
     public class ItemSequencePresenter : IPresenter
     {

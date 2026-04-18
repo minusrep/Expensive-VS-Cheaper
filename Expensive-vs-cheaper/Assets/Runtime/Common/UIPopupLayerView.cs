@@ -1,6 +1,6 @@
 using UnityEngine.UIElements;
 
-namespace DoubleB.Runtime
+namespace DoubleB.Runtime.Runtime.Common
 {
     public class UIPopupLayerView
     {

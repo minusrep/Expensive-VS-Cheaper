@@ -1,8 +1,9 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using DoubleB.Runtime.Runtime.Core;
 using UnityEngine.UIElements;
 
-namespace DoubleB.Runtime.Gameplay
+namespace DoubleB.Runtime.Runtime.Gameplay.ItemChoicer
 {
     public class ItemChoicePresenter : IPresenter
     {

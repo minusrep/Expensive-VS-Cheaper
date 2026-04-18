@@ -1,10 +1,11 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using DoubleB.Runtime.Runtime.Core;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace DoubleB.Runtime.Gameplay
+namespace DoubleB.Runtime.Runtime.Gameplay.ItemSequence
 {
     public class ItemPresenter : IPresenter
     {

@@ -1,4 +1,4 @@
-namespace DoubleB.Runtime
+namespace DoubleB.Runtime.Runtime.Core
 {
     public interface IPresenter
     {

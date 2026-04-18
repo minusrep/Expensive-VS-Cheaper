@@ -1,9 +1,7 @@
 using System;
-using Cysharp.Threading.Tasks;
 using DoubleB.Runtime.Runtime.Descriptions;
-using UnityEngine;
 
-namespace DoubleB.Runtime.Gameplay
+namespace DoubleB.Runtime.Runtime.Gameplay.ItemSequence
 {
     public class ItemSequenceModel
     {

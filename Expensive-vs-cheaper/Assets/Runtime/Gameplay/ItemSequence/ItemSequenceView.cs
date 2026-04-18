@@ -1,6 +1,6 @@
 using UnityEngine.UIElements;
 
-namespace DoubleB.Runtime.Gameplay
+namespace DoubleB.Runtime.Runtime.Gameplay.ItemSequence
 {
     public class ItemSequenceView
     {

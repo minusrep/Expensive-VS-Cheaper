@@ -1,7 +1,8 @@
 using System;
-using UniRx;
+using DoubleB.Runtime.Runtime.Gameplay.ItemChoicer;
+using DoubleB.Runtime.Runtime.Gameplay.ItemSequence;
 
-namespace DoubleB.Runtime.Gameplay
+namespace DoubleB.Runtime.Runtime.Gameplay
 {
     public class GameplayModel
     {

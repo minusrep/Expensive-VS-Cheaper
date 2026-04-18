@@ -1,6 +1,6 @@
 using System;
 
-namespace DoubleB.Runtime
+namespace DoubleB.Runtime.Runtime.Router
 {
     public class UIRouterModel
     {

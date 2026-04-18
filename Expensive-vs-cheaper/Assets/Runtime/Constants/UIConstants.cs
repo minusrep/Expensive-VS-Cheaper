@@ -1,4 +1,4 @@
-namespace DoubleB.Runtime
+namespace DoubleB.Runtime.Runtime.Constants
 {
     public static class UIConstants
     {
