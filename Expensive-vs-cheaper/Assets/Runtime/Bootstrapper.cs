@@ -12,14 +12,14 @@ namespace DoubleB.Runtime
     {
         [SerializeField] private UIDocument _uiDocument;
         [SerializeField] private UIAssetCollection _uiAssetCollection;
-        [SerializeField] private ItemSequenceDescription _itemSequenceDescription;
+        [SerializeField] private DescriptionCollection _descriptionCollection;
         
         private void Start()
         {
             var uiRouterModel = new UIRouterModel(UIConstants.MainMenu);
             var gameModel = new GameModel(uiRouterModel);
             var gameView = new GameView(_uiDocument);
-            var uiRouter = new UIRouterPresenter(gameModel, gameView,  _uiAssetCollection, _itemSequenceDescription);
+            var uiRouter = new UIRouterPresenter(gameModel, gameView,  _uiAssetCollection, _descriptionCollection);
             uiRouter.Enable();
         }
     }

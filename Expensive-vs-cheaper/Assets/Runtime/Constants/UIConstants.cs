@@ -13,5 +13,7 @@ namespace DoubleB.Runtime
         public const string Worth = "worth";
         public const string Title = "title";
         public const string Icon = "icon";
+        public const string WindowLayer = "window-layer";
+        public const string PopupLayer = "popup-layer";
     }
 }

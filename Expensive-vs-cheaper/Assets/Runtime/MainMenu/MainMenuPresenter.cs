@@ -6,9 +6,9 @@ namespace DoubleB.Runtime
     {
         private readonly MainMenuView _view;
 
-        private readonly GameModel _model;
+        private readonly UIWindowRouterModel _model;
         
-        public MainMenuPresenter(GameModel model, MainMenuView view)
+        public MainMenuPresenter(UIWindowRouterModel model, MainMenuView view)
         {
             _view = view;
             _model = model;
@@ -26,7 +26,7 @@ namespace DoubleB.Runtime
 
         private void StartSession()
         {
-            _model.UIRouterModel.ChangeState(UIConstants.Gameplay);
+            _model.ChangeState(UIConstants.Gameplay);
         }
     }
 }
