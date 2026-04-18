@@ -164,3 +164,127 @@
     --unity-image-tint-color: rgb(255, 255, 255);
     rotate: 180deg;
 }
+
+.lose-menu {
+    flex-grow: 1;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+.lose-menu__background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+}
+
+.lose-menu__background-half {
+    width: 50%;
+    height: 100%;
+    flex-grow: 1;
+}
+
+.lose-menu__background-half--left {
+    background-color: rgb(30, 39, 46);
+}
+
+.lose-menu__background-half--right {
+    background-color: rgb(72, 84, 96);
+}
+
+.lose-menu__content {
+    flex-grow: 0;
+    align-items: center;
+    justify-content: center;
+    width: 820px;
+}
+
+.lose-menu__title {
+    -unity-font-definition: url("project://database/Assets/Content/Fonts/ms-reference-sans-serif-gras.ttf?fileID=12800000&guid=cbc6434fea4e55a46852b16b9697eb05&type=3#ms-reference-sans-serif-gras");
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+    font-size: 72px;
+    white-space: normal;
+    margin-bottom: 44px;
+}
+
+.lose-menu__result-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 54px;
+}
+
+.lose-menu__result-label {
+    -unity-font-definition: url("project://database/Assets/Content/Fonts/ms-reference-sans-serif-gras.ttf?fileID=12800000&guid=cbc6434fea4e55a46852b16b9697eb05&type=3#ms-reference-sans-serif-gras");
+    -unity-text-align: middle-center;
+    color: rgb(255, 211, 89);
+    font-size: 38px;
+    white-space: normal;
+}
+
+.lose-menu__result-value {
+    -unity-font-definition: url("project://database/Assets/Content/Fonts/ms-reference-sans-serif-gras.ttf?fileID=12800000&guid=cbc6434fea4e55a46852b16b9697eb05&type=3#ms-reference-sans-serif-gras");
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+    font-size: 38px;
+    margin-left: 12px;
+}
+
+.lose-menu__icon {
+    width: 180px;
+    height: 180px;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 63, 52);
+    border-top-left-radius: 90px;
+    border-top-right-radius: 90px;
+    border-bottom-right-radius: 90px;
+    border-bottom-left-radius: 90px;
+    border-top-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-left-color: rgb(255, 255, 255);
+    border-top-width: 6px;
+    border-right-width: 6px;
+    border-bottom-width: 6px;
+    border-left-width: 6px;
+    margin-bottom: 42px;
+}
+
+.lose-menu__icon-cross {
+    -unity-font-definition: url("project://database/Assets/Content/Fonts/ms-reference-sans-serif-gras.ttf?fileID=12800000&guid=cbc6434fea4e55a46852b16b9697eb05&type=3#ms-reference-sans-serif-gras");
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+    font-size: 96px;
+    rotate: 45deg;
+}
+
+.lose-menu__button {
+    -unity-font-definition: url("project://database/Assets/Content/Fonts/ms-reference-sans-serif-gras.ttf?fileID=12800000&guid=cbc6434fea4e55a46852b16b9697eb05&type=3#ms-reference-sans-serif-gras");
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+    font-size: 42px;
+    background-color: rgb(255, 63, 52);
+    width: 620px;
+    height: 110px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 36px;
+    margin-left: 0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    padding-right: 32px;
+    padding-left: 32px;
+}
+
+.lose-menu__button--exit {
+    margin-bottom: 0;
+}
