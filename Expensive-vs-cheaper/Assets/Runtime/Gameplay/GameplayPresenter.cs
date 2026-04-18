@@ -10,6 +10,7 @@ namespace DoubleB.Runtime.Gameplay
         private readonly GameplayModel _model;
 
         private ItemSequencePresenter _itemSequencePresenter;
+        private ItemChoicePresenter _itemChoicePresenter;
 
         public GameplayPresenter(GameplayModel model, GameplayView view, UIAssetCollection uiAssetCollection)
         {
@@ -23,45 +24,19 @@ namespace DoubleB.Runtime.Gameplay
             _model.Reset();
             
             var itemSequenceView = new ItemSequenceView(_view.Root.Q<VisualElement>(UIConstants.Content));
-            _itemSequencePresenter = new ItemSequencePresenter(_model.ItemSequence, itemSequenceView, _uiAssetCollection);
-            _itemSequencePresenter.Enable();
+            var itemChoiceView = new ItemChoiceView(_view.Root.Q<VisualElement>(UIConstants.Choicer));
             
-            _view.MoreExpensiveButton.clicked += SelectMoreExpensive;
-            _view.CheaperButton.clicked += SelectCheaper;
+            _itemSequencePresenter = new ItemSequencePresenter(_model.ItemSequence, itemSequenceView, _uiAssetCollection);
+            _itemChoicePresenter = new ItemChoicePresenter(_model,  itemChoiceView);
+            
+            _itemSequencePresenter.Enable();
+            _itemChoicePresenter.Enable();
         }
 
         public void Disable()
         {
-            _view.MoreExpensiveButton.clicked -= SelectMoreExpensive;
-            _view.CheaperButton.clicked -= SelectCheaper;
-        }
-
-        private void SelectMoreExpensive()
-        {
-            var success = _model.ItemSequence.CurrentItem.Description.Worth <= _model.ItemSequence.NextItem.Description.Worth;
-
-            if (success)
-            {
-                _model.ItemSequence.Next();
-            }
-            else
-            {
-                _model.Lose();
-            }
-        }
-
-        private void SelectCheaper()
-        {
-            var success = _model.ItemSequence.CurrentItem.Description.Worth >= _model.ItemSequence.NextItem.Description.Worth;
-
-            if (success)
-            {
-                _model.ItemSequence.Next();
-            }
-            else
-            {
-                _model.Lose();
-            }
+            _itemSequencePresenter.Disable();
+            _itemChoicePresenter.Disable();
         }
     }
 }

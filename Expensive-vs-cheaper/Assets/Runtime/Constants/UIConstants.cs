@@ -15,6 +15,7 @@ namespace DoubleB.Runtime
         public const string PopupLayer = "popup-layer";
         public const string ExitButton = "exit-button";
         public const string RetryButton = "retry-button";
+        public const string Choicer = "choicer";
 
         public static class Windows
         {

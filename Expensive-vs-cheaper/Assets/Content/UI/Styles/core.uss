@@ -267,3 +267,98 @@
 .lose-menu__button--exit {
     margin-bottom: 0;
 }
+
+.menu-button,
+.control-button,
+.more-button,
+.less-button,
+.lose-menu__button {
+    transition-property: scale, translate, background-color, opacity, -unity-background-image-tint-color;
+    transition-duration: 120ms, 120ms, 120ms, 120ms, 120ms;
+    transition-timing-function: ease-out, ease-out, ease-out, ease-out, ease-out;
+    scale: 1 1;
+    translate: 0 0;
+    border-top-width: 4px;
+    border-right-width: 4px;
+    border-bottom-width: 4px;
+    border-left-width: 4px;
+    border-top-color: rgba(255, 221, 89, 0);
+    border-right-color: rgba(255, 221, 89, 0);
+    border-bottom-color: rgba(255, 221, 89, 0);
+    border-left-color: rgba(255, 221, 89, 0);
+}
+
+.menu-button:hover,
+.control-button:hover,
+.more-button:hover,
+.less-button:hover,
+.lose-menu__button:hover {
+    scale: 1.04 1.04;
+    translate: 0 -4px;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.menu-button:active,
+.control-button:active,
+.more-button:active,
+.less-button:active,
+.lose-menu__button:active {
+    scale: 0.96 0.96;
+    translate: 0 4px;
+    -unity-background-image-tint-color: rgb(230, 230, 230);
+}
+
+.menu-button:focus,
+.control-button:focus,
+.more-button:focus,
+.less-button:focus,
+.lose-menu__button:focus {
+    border-top-color: rgb(255, 221, 89);
+    border-right-color: rgb(255, 221, 89);
+    border-bottom-color: rgb(255, 221, 89);
+    border-left-color: rgb(255, 221, 89);
+}
+
+.menu-button:disabled,
+.control-button:disabled,
+.more-button:disabled,
+.less-button:disabled,
+.lose-menu__button:disabled {
+    opacity: 0.55;
+    scale: 1 1;
+    translate: 0 0;
+}
+
+.menu-button:hover,
+.control-button:hover,
+.more-button:hover {
+    background-color: rgb(35, 245, 156);
+}
+
+.less-button:hover,
+.lose-menu__button:hover {
+    background-color: rgb(255, 82, 72);
+}
+
+.menu-button:active,
+.control-button:active,
+.more-button:active {
+    background-color: rgb(8, 196, 108);
+}
+
+.less-button:active,
+.lose-menu__button:active {
+    background-color: rgb(224, 48, 39);
+}
+
+.menu-button:hover .unity-button__image,
+.more-button:hover .unity-button__image,
+.less-button:hover .unity-button__image {
+    scale: 1.12 1.12;
+}
+
+.menu-button:active .unity-button__image,
+.more-button:active .unity-button__image,
+.less-button:active .unity-button__image {
+    scale: 0.9 0.9;
+}
