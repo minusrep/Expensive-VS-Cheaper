@@ -43,13 +43,13 @@ namespace DoubleB.Runtime.Gameplay
                 presenter.Enable();
             }
 
-            _model.OnChange += UpdateIconSwayAnimations;
-            UpdateIconSwayAnimations();
+            _model.OnChange += UpdateActiveItemAnimations;
+            UpdateActiveItemAnimations();
         }
 
         public void Disable()
         {
-            _model.OnChange -= UpdateIconSwayAnimations;
+            _model.OnChange -= UpdateActiveItemAnimations;
 
             foreach (var presenter in _itemPresenters)
             {
@@ -64,14 +64,19 @@ namespace DoubleB.Runtime.Gameplay
             await UniTask.WhenAll(_itemPresenters.Select(x => x.WaitForAnimationAsync()));
         }
 
-        private void UpdateIconSwayAnimations()
+        private void UpdateActiveItemAnimations()
         {
             foreach (var presenter in _itemPresenters)
             {
-                var isCurrent = ReferenceEquals(presenter.Model, _model.CurrentItem);
                 var isNext = ReferenceEquals(presenter.Model, _model.NextItem);
+                var role = ItemViewRole.None;
 
-                presenter.SetIconSwayEnabled(isCurrent || isNext);
+                if (isNext)
+                {
+                    role = ItemViewRole.Next;
+                }
+
+                presenter.SetRole(role);
             }
         }
     }

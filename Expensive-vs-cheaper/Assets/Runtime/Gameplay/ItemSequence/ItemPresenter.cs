@@ -10,6 +10,8 @@ namespace DoubleB.Runtime.Gameplay
     {
         private const float IconSwayAngle = 6f;
         private const float IconSwayDuration = 0.8f;
+        private const float TitleTypeDuration = 0.32f;
+        private const float WorthTypeDuration = 0.16f;
 
         public ItemModel Model => _model;
 
@@ -20,6 +22,7 @@ namespace DoubleB.Runtime.Gameplay
 
         private UniTask CurrentAnimationTask = UniTask.CompletedTask;
         private bool _isIconSwayEnabled;
+        private ItemViewRole _role;
         
         public ItemPresenter(ItemModel model, ItemView view)
         {
@@ -45,6 +48,7 @@ namespace DoubleB.Runtime.Gameplay
             _disposables.Dispose();
             _model.OnChangeDescription -= HandleDescription;
             StopIconSway();
+            StopTextTypewriter();
             DOTween.Kill(_view.Root);
         }
 
@@ -121,6 +125,26 @@ namespace DoubleB.Runtime.Gameplay
             StopIconSway();
         }
 
+        public void SetRole(ItemViewRole role)
+        {
+            if (_role == role)
+            {
+                return;
+            }
+
+            _role = role;
+            SetIconSwayEnabled(role != ItemViewRole.None);
+
+            if (role == ItemViewRole.None)
+            {
+                StopTextTypewriter();
+                HandleDescription();
+                return;
+            }
+
+            StartTextTypewriter();
+        }
+
         private void StartIconSway()
         {
             DOTween.Kill(_view.Icon);
@@ -141,5 +165,46 @@ namespace DoubleB.Runtime.Gameplay
             DOTween.Kill(_view.Icon);
             _view.Icon.style.rotate = new Rotate(new Angle(0, AngleUnit.Degree));
         }
+
+        private void StartTextTypewriter()
+        {
+            StopTextTypewriter();
+
+            var title = _model.Description.Title;
+            var worth = _model.Description.Worth.ToString("$0");
+
+            _view.Title.text = string.Empty;
+            _view.Worth.text = string.Empty;
+
+            DOTween.To(
+                    () => 0,
+                    x => _view.Title.text = title.Substring(0, Mathf.Clamp(x, 0, title.Length)),
+                    title.Length,
+                    TitleTypeDuration)
+                .SetId(_view.Title)
+                .SetEase(Ease.Linear);
+
+            DOTween.To(
+                    () => 0,
+                    x => _view.Worth.text = worth.Substring(0, Mathf.Clamp(x, 0, worth.Length)),
+                    worth.Length,
+                    WorthTypeDuration)
+                .SetId(_view.Worth)
+                .SetDelay(TitleTypeDuration)
+                .SetEase(Ease.Linear);
+        }
+
+        private void StopTextTypewriter()
+        {
+            DOTween.Kill(_view.Title);
+            DOTween.Kill(_view.Worth);
+        }
+    }
+
+    public enum ItemViewRole
+    {
+        None,
+        Current,
+        Next
     }
 }
