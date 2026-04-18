@@ -54,9 +54,11 @@ namespace DoubleB.Runtime.Gameplay
             }
 
             _model.LockInteraction();
-            
+
+            await _itemChoicePresenter.HideAsync();
             await _itemSequencePresenter.NextAsync();
-            
+            await _itemChoicePresenter.ShowAsync();
+
             _model.UnlockInteraction();
         }
 
