@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abbf699093624fc0b501cc150e2a2895, type: 3}
+  m_Name: ItemSequenceDescription
+  m_EditorClassIdentifier: DoubleB.Runtime::DoubleB.Runtime.Gameplay.ItemSequenceDescription
+  <CurrentIndex>k__BackingField: 1
+  <Positions>k__BackingField: ceffffff000000003200000064000000
+  <Colors>k__BackingField:
+  - {r: 0.09411766, g: 0.1254902, b: 0.14509805, a: 1}
+  - {r: 0.11764707, g: 0.15686275, b: 0.18039216, a: 1}
+  - {r: 0.2784314, g: 0.33333334, b: 0.37647063, a: 1}
+  - {r: 0.22352943, g: 0.26666668, b: 0.3019608, a: 1}
+  <Items>k__BackingField: {fileID: 11400000, guid: 1107feaa2b21cab4dba4ca3049b24ae1, type: 2}

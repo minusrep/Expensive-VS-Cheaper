@@ -1,4 +1,3 @@
-using DoubleB.Runtime.Runtime.Descriptions;
 using DoubleB.Runtime.Runtime.ViewDescriptions;
 using UnityEngine.UIElements;
 
@@ -6,26 +5,23 @@ namespace DoubleB.Runtime.Gameplay
 {
     public class GameplayPresenter : IPresenter
     {
-        private readonly ItemDescriptionCollection _itemDescriptions;
         private readonly UIAssetCollection _uiAssetCollection;
         private readonly GameplayView _view;
-        private GameplayModel _model;
+        private readonly GameplayModel _model;
 
         private ItemSequencePresenter _itemSequencePresenter;
 
-        public GameplayPresenter(GameplayModel model, GameplayView view, ItemDescriptionCollection itemDescriptions, UIAssetCollection uiAssetCollection)
+        public GameplayPresenter(GameplayModel model, GameplayView view, UIAssetCollection uiAssetCollection)
         {
             _model = model;
             _view = view;
-            _itemDescriptions = itemDescriptions;
             _uiAssetCollection = uiAssetCollection;
         }
 
         public void Enable()
         {
-            var itemSequence = new ItemSequenceModel(_itemDescriptions.GetRandom(), _itemDescriptions.GetRandom());
-            _model = new GameplayModel(itemSequence);
-
+            _model.Reset();
+            
             var itemSequenceView = new ItemSequenceView(_view.Root.Q<VisualElement>(UIConstants.Content));
             _itemSequencePresenter = new ItemSequencePresenter(_model.ItemSequence, itemSequenceView, _uiAssetCollection);
             _itemSequencePresenter.Enable();
@@ -42,21 +38,29 @@ namespace DoubleB.Runtime.Gameplay
 
         private void SelectMoreExpensive()
         {
-            var success = _model.ItemSequence.CurrentItem.Worth <= _model.ItemSequence.NextItem.Worth;
+            var success = _model.ItemSequence.CurrentItem.Description.Worth <= _model.ItemSequence.NextItem.Description.Worth;
 
             if (success)
             {
-                _model.ItemSequence.Next(_itemDescriptions.GetRandom());
+                _model.ItemSequence.Next();
+            }
+            else
+            {
+                _model.Lose();
             }
         }
 
         private void SelectCheaper()
         {
-            var success = _model.ItemSequence.CurrentItem.Worth >= _model.ItemSequence.NextItem.Worth;
+            var success = _model.ItemSequence.CurrentItem.Description.Worth >= _model.ItemSequence.NextItem.Description.Worth;
 
             if (success)
             {
-                _model.ItemSequence.Next(_itemDescriptions.GetRandom());
+                _model.ItemSequence.Next();
+            }
+            else
+            {
+                _model.Lose();
             }
         }
     }

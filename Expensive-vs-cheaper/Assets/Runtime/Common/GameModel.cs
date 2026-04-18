@@ -7,9 +7,10 @@ namespace DoubleB.Runtime
         public GameplayModel GameplayModel { get; set; }
         public UIRouterModel UIRouterModel { get; private set; }
 
-        public GameModel(UIRouterModel uiRouterModel)
+        public GameModel(UIRouterModel uiRouterModel, GameplayModel gameplayModel)
         {
             UIRouterModel = uiRouterModel;
+            GameplayModel = gameplayModel;
         }
     }
 }

@@ -1,3 +1,5 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Content/UI/Styles/core.uss?fileID=7433441132597879392&amp;guid=85897d362b8a26b41bd9c71446df5c35&amp;type=3#core"/>
+    <ui:VisualElement name="window-layer" style="flex-grow: 1; position: absolute; width: 100%; height: 100%;"/>
+    <ui:VisualElement name="popup-layer" style="flex-grow: 1; position: absolute; width: 100%; height: 100%;"/>
 </ui:UXML>

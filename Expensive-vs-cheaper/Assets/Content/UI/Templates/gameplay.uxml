@@ -1,9 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Content/UI/Styles/core.uss?fileID=7433441132597879392&amp;guid=85897d362b8a26b41bd9c71446df5c35&amp;type=3#core"/>
     <ui:VisualElement name="root" style="flex-grow: 1; background-color: rgb(64, 209, 251); background-image: url(&quot;project://database/Assets/Content/Sprites/background.png?fileID=2800000&amp;guid=c965a64e8683e5843ba4b437c12ab98c&amp;type=3#background&quot;);">
-        <ui:VisualElement name="content" style="flex-grow: 1; flex-direction: row;">
-            <ui:VisualElement name="item" class="item" style="flex-grow: 0; translate: 0% 0; position: absolute; left: -50%;"/>
-        </ui:VisualElement>
+        <ui:VisualElement name="content" style="flex-grow: 1; flex-direction: row;"/>
         <ui:VisualElement name="buttons" style="flex-grow: 1; position: absolute; width: 972px; height: 1075px; left: 948px;">
             <ui:VisualElement name="space" style="flex-grow: 8;"/>
             <ui:VisualElement name="content" style="align-items: center; height: 420px;">

@@ -1,5 +1,6 @@
 using System;
 using DoubleB.Runtime.Runtime.Descriptions;
+using UnityEngine;
 
 namespace DoubleB.Runtime.Gameplay
 {
@@ -7,24 +8,43 @@ namespace DoubleB.Runtime.Gameplay
     {
         public event Action OnChange;
 
-        public ItemDescription CompleteItem { get; private set; }
-
-        public ItemDescription CurrentItem { get; private set; }
-
-        public ItemDescription NextItem { get; private set; }
-
-        public ItemSequenceModel(ItemDescription currentItem, ItemDescription nextItem)
+        public ItemModel CurrentItem => Items[Description.CurrentIndex];
+        public ItemModel NextItem => Items[Description.NextIndex];
+        
+        public ItemModel[] Items { get; private set; }
+        
+        public ItemSequenceDescription Description { get; private set; }
+        
+        public ItemSequenceModel(ItemSequenceDescription description)
         {
-            CurrentItem = currentItem;
-            NextItem = nextItem;
+            Description = description;
+            Items = new ItemModel[description.Capacity];
         }
 
-
-        public void Next(ItemDescription nextItem)
+        public void Reset()
         {
-            CompleteItem = CurrentItem;
-            CurrentItem = NextItem;
-            NextItem = nextItem;
+            Items = new ItemModel[Description.Capacity];
+        }
+
+        public void Next()
+        {
+            var first = Items[0];
+
+            for (var i = 0; i < Items.Length - 1; i++)
+            {
+                Items[i] = Items[i + 1];
+            }
+
+            Items[^1] = first;
+
+            first.Description = Description.Items.GetRandom();
+
+            for (var i = 0; i < Items.Length; i++)
+            {
+                Items[i].Color.Value = Description.GetViewColor(i);
+                Items[i].Position.Value = Description.GetViewPosition(i);
+            }
+
             OnChange?.Invoke();
         }
     }

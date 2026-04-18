@@ -8,7 +8,6 @@ namespace DoubleB.Runtime.Runtime.Descriptions
     {
         public string Id;
         public string Title;
-        public Color Color;
         public ulong Worth;
         public Sprite Icon;
     }

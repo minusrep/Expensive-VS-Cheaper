@@ -4,22 +4,27 @@ namespace DoubleB.Runtime
 {
     public class UIRouterModel
     {
-        public event Action OnChangeState;
+        public UIWindowRouterModel WindowRouterModel { get; private set; }
+        public UIPopupRouterModel PopupRouterModel { get; private set; }
         
-        public string CurrentState { get; private set; }
-        
-        public string PreviousState { get; private set; }
+        public event Action OnRestartRequested;
 
-        public UIRouterModel(string currentState)
+        public event Action OnExitToMainMenuRequested;
+
+        public UIRouterModel(string startWindow)
         {
-            CurrentState = currentState;
+            WindowRouterModel = new UIWindowRouterModel(startWindow);
+            PopupRouterModel = new UIPopupRouterModel();
         }
 
-        public void ChangeState(string newState)
+        public void RequestRestart()
         {
-            PreviousState = CurrentState;
-            CurrentState = newState;
-            OnChangeState?.Invoke();
+            OnRestartRequested?.Invoke();
+        }
+
+        public void RequestExitToMainMenu()
+        {
+            OnExitToMainMenuRequested?.Invoke();
         }
     }
 }

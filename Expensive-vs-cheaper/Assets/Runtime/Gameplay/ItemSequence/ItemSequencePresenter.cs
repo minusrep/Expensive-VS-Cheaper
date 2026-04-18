@@ -1,96 +1,53 @@
 using DoubleB.Runtime.Runtime.Descriptions;
 using DoubleB.Runtime.Runtime.ViewDescriptions;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace DoubleB.Runtime.Gameplay
 {
     public class ItemSequencePresenter : IPresenter
     {
-        private const int SequenceCount = 6;
-        private const int CurrentIndex = 2;
-        
-        private readonly ItemView[] _itemViews = new ItemView[SequenceCount];
-        private readonly int[] _itemPositions = new int[SequenceCount] { -100, -50, 0, 50, 100, 150 };
-
         private readonly UIAssetCollection _uiAssetCollection;
+        
         private readonly ItemSequenceView _view;
         private readonly ItemSequenceModel _model;
-
+        
+        private readonly ItemPresenter[] _itemPresenters;
+        
         public ItemSequencePresenter(ItemSequenceModel model, ItemSequenceView view, UIAssetCollection uiAssetCollection)
         {
             _model = model;
             _view = view;
             _uiAssetCollection = uiAssetCollection;
+            _itemPresenters = new ItemPresenter[_model.Description.Capacity];
         }
 
         public void Enable()
         {
             var asset = _uiAssetCollection.Get(UIConstants.Item).Value;
             
-            for (var i = 0; i < _itemViews.Length; i++)
+            for (var i = 0; i < _itemPresenters.Length; i++)
             {
-                var itemElement = asset.CloneTree().Q<VisualElement>(UIConstants.Item);
+                var element = asset.CloneTree().Q<VisualElement>(UIConstants.Item);
+                var model = new ItemModel(_model.Description.Items.GetRandom());
+                var view = new ItemView(element);
+                var presenter = new ItemPresenter(model, view);
                 
-                _itemViews[i] = new ItemView(itemElement);
+                _view.Root.Add(element);
                 
-                AnimateToPosition(_itemViews[i].Root, _itemPositions[i]);
-                
-                _view.Root.Add(itemElement);
+                _itemPresenters[i] = presenter;
+                _model.Items[i] = model;
+                _model.Items[i].Position.Value = _model.Description.GetViewPosition(i);
+                _model.Items[i].Color.Value = _model.Description.GetViewColor(i);
+                presenter.Enable();
             }
-
-            SetupItems();
-            
-            _model.OnChange += Shift;
         }
 
         public void Disable()
         {
-            _model.OnChange -= Shift;
-        }
-
-        private void SetupItems()
-        {
-            SetupCurrentItem(_itemViews[CurrentIndex], _model.CurrentItem);
-            SetupNextItem(_itemViews[CurrentIndex + 1], _model.NextItem);
-        }
-
-        private void SetupCurrentItem(ItemView itemView, ItemDescription itemDescription)
-        {
-            itemView.Title.text = itemDescription.Title;
-            itemView.Icon.style.backgroundImage = new StyleBackground(itemDescription.Icon);
-            itemView.Worth.text = itemDescription.Worth.ToString("$0");
-        }
-
-        private void SetupNextItem(ItemView itemView, ItemDescription itemDescription)
-        {
-            itemView.Title.text = itemDescription.Title;
-            itemView.Icon.style.backgroundImage = new StyleBackground(itemDescription.Icon);
-            itemView.Worth.text = string.Empty;
-        }
-
-        private void Shift()
-        {
-            var first = _itemViews[0];
-            
-            for (var i = 0; i < _itemViews.Length - 1; i++)
+            foreach (var presenter in _itemPresenters)
             {
-                _itemViews[i] = _itemViews[i + 1];
+                presenter.Disable();
             }
-
-            for (var i = 0; i < _itemViews.Length; i++)
-            {
-                AnimateToPosition(_itemViews[i].Root, _itemPositions[i]);
-            }
-            
-            _itemViews[^1] = first;
-        
-            SetupItems();
-        }
-
-        private void AnimateToPosition(VisualElement element, float targetPercent)
-        {
-            element.style.left = new Length(targetPercent, LengthUnit.Percent);
         }
     }
 }

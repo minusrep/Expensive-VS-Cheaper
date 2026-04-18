@@ -1,7 +1,12 @@
 {
     "name": "DoubleB.Runtime",
     "rootNamespace": "DoubleB.Runtime",
-    "references": [],
+    "references": [
+        "GUID:b1474061129065849bbfbe83082793f0",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:029c1c1b674aaae47a6841a0b89ad80e",
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
