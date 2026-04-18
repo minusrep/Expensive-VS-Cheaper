@@ -37,30 +37,12 @@ namespace DoubleB.Runtime.Gameplay
         
         private void SelectMoreExpensive()
         {
-            var success = _model.ItemSequence.CurrentItem.Description.Worth <= _model.ItemSequence.NextItem.Description.Worth;
-
-            if (success)
-            {
-                _model.ItemSequence.Next();
-            }
-            else
-            {
-                _model.Lose();
-            }
+            _model.SelectMoreExpensive();
         }
         
         private void SelectCheaper()
         {
-            var success = _model.ItemSequence.CurrentItem.Description.Worth >= _model.ItemSequence.NextItem.Description.Worth;
-
-            if (success)
-            {
-                _model.ItemSequence.Next();
-            }
-            else
-            {
-                _model.Lose();
-            }
+            _model.SelectCheaper();
         }
     }
 }

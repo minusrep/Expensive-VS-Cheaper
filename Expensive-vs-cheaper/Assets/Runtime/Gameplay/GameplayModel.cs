@@ -1,4 +1,5 @@
 using System;
+using UniRx;
 
 namespace DoubleB.Runtime.Gameplay
 {
@@ -6,6 +7,8 @@ namespace DoubleB.Runtime.Gameplay
     {
         public event Action OnLose;
 
+        public event Action<ItemChoice> OnSelected;
+        
         public event Action<bool> OnInteractionChanged;
         
         public ItemSequenceModel ItemSequence { get; set; }
@@ -37,6 +40,16 @@ namespace DoubleB.Runtime.Gameplay
         {
             CanInteract = true;
             OnInteractionChanged?.Invoke(CanInteract);
+        }
+
+        public void SelectMoreExpensive()
+        {
+            OnSelected?.Invoke(ItemChoice.MoreExpensive);
+        }
+
+        public void SelectCheaper()
+        {
+            OnSelected?.Invoke(ItemChoice.Cheaper);
         }
     }
 }

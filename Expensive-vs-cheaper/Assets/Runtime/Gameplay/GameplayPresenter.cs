@@ -31,12 +31,46 @@ namespace DoubleB.Runtime.Gameplay
             
             _itemSequencePresenter.Enable();
             _itemChoicePresenter.Enable();
+
+            _model.OnSelected += HandleChoice;
         }
 
         public void Disable()
         {
             _itemSequencePresenter.Disable();
             _itemChoicePresenter.Disable();
+            
+            _model.OnSelected -= HandleChoice;
+        }
+
+        private async void HandleChoice(ItemChoice choice)
+        {
+            var success = IsCorrect(choice);
+
+            if (!success)
+            {
+                _model.Lose();
+                return;
+            }
+
+            _model.LockInteraction();
+            
+            await _itemSequencePresenter.NextAsync();
+            
+            _model.UnlockInteraction();
+        }
+
+        private bool IsCorrect(ItemChoice choice)
+        {
+            var currentWorth = _model.ItemSequence.CurrentItem.Description.Worth;
+            var nextWorth = _model.ItemSequence.NextItem.Description.Worth;
+
+            return choice switch
+            {
+                ItemChoice.MoreExpensive => currentWorth <= nextWorth,
+                ItemChoice.Cheaper => currentWorth >= nextWorth,
+                _ => false
+            };
         }
     }
 }

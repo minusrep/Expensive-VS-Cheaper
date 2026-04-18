@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using DoubleB.Runtime.Runtime.Descriptions;
 using DoubleB.Runtime.Runtime.ViewDescriptions;
 using UnityEngine.UIElements;
@@ -48,6 +50,13 @@ namespace DoubleB.Runtime.Gameplay
             {
                 presenter.Disable();
             }
+        }
+
+        public async UniTask NextAsync()
+        {
+            _model.Next();
+
+            await UniTask.WhenAll(_itemPresenters.Select(x => x.WaitForAnimationAsync()));
         }
     }
 }

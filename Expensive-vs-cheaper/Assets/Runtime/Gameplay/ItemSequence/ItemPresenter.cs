@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UniRx;
 using UnityEngine;
@@ -11,6 +12,8 @@ namespace DoubleB.Runtime.Gameplay
         private readonly ItemView _view;
 
         private readonly CompositeDisposable _disposables = new CompositeDisposable();
+
+        private UniTask CurrentAnimationTask = UniTask.CompletedTask;
         
         public ItemPresenter(ItemModel model, ItemView view)
         {
@@ -70,12 +73,13 @@ namespace DoubleB.Runtime.Gameplay
                     0.25f
                 ).SetEase(Ease.Linear);
 
-                DOTween.Sequence().SetId(_view.Root).Append(moveTween).Join(colorTween);
+                CurrentAnimationTask = DOTween.Sequence().SetId(_view.Root).Append(moveTween).Join(colorTween).ToUniTask();
             }
             else
             {
                 _view.Root.style.left = new Length(currentValue, LengthUnit.Percent);
                 _view.Root.style.backgroundColor = new StyleColor(targetColor);
+                CurrentAnimationTask = UniTask.CompletedTask;
             }
         }
 
@@ -84,6 +88,11 @@ namespace DoubleB.Runtime.Gameplay
             _view.Title.text = _model.Description.Title;
             _view.Icon.style.backgroundImage = new StyleBackground(_model.Description.Icon);
             _view.Worth.text = _model.Description.Worth.ToString("$0");
+        }
+
+        public UniTask WaitForAnimationAsync()
+        {
+            return CurrentAnimationTask;
         }
     }
 }
