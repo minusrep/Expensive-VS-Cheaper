@@ -68,10 +68,15 @@ namespace DoubleB.Runtime.Runtime.Gameplay.ItemSequence
         {
             foreach (var presenter in _itemPresenters)
             {
+                var isCurrent = ReferenceEquals(presenter.Model, _model.CurrentItem);
                 var isNext = ReferenceEquals(presenter.Model, _model.NextItem);
                 var role = ItemViewRole.None;
 
-                if (isNext)
+                if (isCurrent)
+                {
+                    role = ItemViewRole.Current;
+                }
+                else if (isNext)
                 {
                     role = ItemViewRole.Next;
                 }

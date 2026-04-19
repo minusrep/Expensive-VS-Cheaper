@@ -68,11 +68,12 @@ namespace DoubleB.Runtime.Runtime.Gameplay.ItemSequence
             
             if (withAnimation)
             {
+                const float duration = 0.5f;
                 var moveTween = DOTween.To(
                         () => _view.Root.style.left.value.value,
                         x => _view.Root.style.left = new Length(x, LengthUnit.Percent),
                         currentValue,
-                        0.25f)
+                        duration)
                     .SetEase(Ease.Linear);
 
                 var colorTween = DOTween.To(
@@ -83,7 +84,7 @@ namespace DoubleB.Runtime.Runtime.Gameplay.ItemSequence
                         _view.Root.style.backgroundColor = new StyleColor(x);
                     },
                     targetColor,
-                    0.25f
+                    duration
                 ).SetEase(Ease.Linear);
 
                 CurrentAnimationTask = DOTween.Sequence().SetId(_view.Root).Append(moveTween).Join(colorTween).ToUniTask();
@@ -134,7 +135,7 @@ namespace DoubleB.Runtime.Runtime.Gameplay.ItemSequence
             }
 
             _role = role;
-            SetIconSwayEnabled(role != ItemViewRole.None);
+            SetIconSwayEnabled(role == ItemViewRole.Next);
 
             if (role == ItemViewRole.None)
             {
@@ -172,7 +173,7 @@ namespace DoubleB.Runtime.Runtime.Gameplay.ItemSequence
             StopTextTypewriter();
 
             var title = _model.Description.Title;
-            var worth = _model.Description.Worth.ToString("$0");
+            var worth = GetWorthText();
 
             _view.Title.text = string.Empty;
             _view.Worth.text = string.Empty;
@@ -199,6 +200,13 @@ namespace DoubleB.Runtime.Runtime.Gameplay.ItemSequence
         {
             DOTween.Kill(_view.Title);
             DOTween.Kill(_view.Worth);
+        }
+
+        private string GetWorthText()
+        {
+            return _role == ItemViewRole.Next
+                ? "$??"
+                : _model.Description.Worth.ToString("$0");
         }
     }
 
