@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c87fdb8069ae4c538160d3475583bbbd, type: 3}
+  m_Name: AudioAssetCollection
+  m_EditorClassIdentifier: DoubleB.Runtime::DoubleB.Runtime.Runtime.ViewDescriptions.AudioAssetCollection
+  _viewDescriptions:
+  - {fileID: 11400000, guid: d9784a59e707974458990bb49b69b72f, type: 2}
