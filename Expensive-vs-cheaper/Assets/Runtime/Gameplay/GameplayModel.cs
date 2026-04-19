@@ -9,6 +9,8 @@ namespace DoubleB.Runtime.Runtime.Gameplay
         public event Action OnLose;
 
         public event Action<ItemChoice> OnSelected;
+
+        public event Action<ItemChoiceResult> OnGetResult;
         
         public event Action<bool> OnInteractionChanged;
         
@@ -51,6 +53,11 @@ namespace DoubleB.Runtime.Runtime.Gameplay
         public void SelectCheaper()
         {
             OnSelected?.Invoke(ItemChoice.Cheaper);
+        }
+
+        public void RegisterResult(ItemChoiceResult result)
+        {
+            OnGetResult?.Invoke(result);
         }
     }
 }

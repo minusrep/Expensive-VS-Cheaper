@@ -3,7 +3,7 @@ using UnityEngine.UIElements;
 
 namespace DoubleB.Runtime.Runtime.ViewDescriptions
 {
-    [CreateAssetMenu(fileName = "UIAsset", menuName = "ViewDescription/UIAsset")]
+    [CreateAssetMenu(fileName = "UIAsset", menuName = "Asset/UIAsset")]
     public class UIAsset : ViewDescription<VisualTreeAsset>
     {
         

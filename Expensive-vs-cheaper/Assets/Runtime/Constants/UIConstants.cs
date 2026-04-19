@@ -17,6 +17,13 @@ namespace DoubleB.Runtime.Runtime.Constants
         public const string RetryButton = "retry-button";
         public const string Choicer = "choicer";
 
+        public static class Sounds
+        {
+            public const string Click = "click";
+            public const string Success = "success";
+            public const string Failure = "failure";
+        }
+        
         public static class Windows
         {
             public const string MainMenu = "main-menu";

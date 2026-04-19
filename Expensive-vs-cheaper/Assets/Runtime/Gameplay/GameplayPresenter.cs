@@ -51,6 +51,8 @@ namespace DoubleB.Runtime.Runtime.Gameplay
         {
             var success = IsCorrect(choice);
 
+            _model.RegisterResult(success ? ItemChoiceResult.Success : ItemChoiceResult.Fail);
+            
             if (!success)
             {
                 _model.Lose();
