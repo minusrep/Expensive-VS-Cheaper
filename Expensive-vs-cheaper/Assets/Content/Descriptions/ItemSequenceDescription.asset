@@ -15,8 +15,8 @@ MonoBehaviour:
   <CurrentIndex>k__BackingField: 1
   <Positions>k__BackingField: ceffffff000000003200000064000000
   <Colors>k__BackingField:
-  - {r: 0.09411766, g: 0.1254902, b: 0.14509805, a: 1}
+  - {r: 0.11764707, g: 0.15686275, b: 0.18039216, a: 1}
   - {r: 0.11764707, g: 0.15686275, b: 0.18039216, a: 1}
   - {r: 0.2784314, g: 0.33333334, b: 0.37647063, a: 1}
-  - {r: 0.22352943, g: 0.26666668, b: 0.3019608, a: 1}
+  - {r: 0.2784314, g: 0.33333334, b: 0.37647063, a: 1}
   <Items>k__BackingField: {fileID: 11400000, guid: 1107feaa2b21cab4dba4ca3049b24ae1, type: 2}

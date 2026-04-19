@@ -1,8 +1,7 @@
 using System;
 using DoubleB.Runtime.Runtime.Descriptions;
-using UnityEngine;
 
-namespace DoubleB.Runtime.Gameplay
+namespace DoubleB.Runtime.Runtime.Gameplay.ItemSequence
 {
     public class ItemSequenceModel
     {

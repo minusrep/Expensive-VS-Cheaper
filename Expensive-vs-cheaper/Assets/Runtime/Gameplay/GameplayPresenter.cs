@@ -1,7 +1,11 @@
+using DoubleB.Runtime.Runtime.Constants;
+using DoubleB.Runtime.Runtime.Core;
+using DoubleB.Runtime.Runtime.Gameplay.ItemChoicer;
+using DoubleB.Runtime.Runtime.Gameplay.ItemSequence;
 using DoubleB.Runtime.Runtime.ViewDescriptions;
 using UnityEngine.UIElements;
 
-namespace DoubleB.Runtime.Gameplay
+namespace DoubleB.Runtime.Runtime.Gameplay
 {
     public class GameplayPresenter : IPresenter
     {
@@ -10,6 +14,7 @@ namespace DoubleB.Runtime.Gameplay
         private readonly GameplayModel _model;
 
         private ItemSequencePresenter _itemSequencePresenter;
+        private ItemChoicePresenter _itemChoicePresenter;
 
         public GameplayPresenter(GameplayModel model, GameplayView view, UIAssetCollection uiAssetCollection)
         {
@@ -23,45 +28,55 @@ namespace DoubleB.Runtime.Gameplay
             _model.Reset();
             
             var itemSequenceView = new ItemSequenceView(_view.Root.Q<VisualElement>(UIConstants.Content));
-            _itemSequencePresenter = new ItemSequencePresenter(_model.ItemSequence, itemSequenceView, _uiAssetCollection);
-            _itemSequencePresenter.Enable();
+            var itemChoiceView = new ItemChoiceView(_view.Root.Q<VisualElement>(UIConstants.Choicer));
             
-            _view.MoreExpensiveButton.clicked += SelectMoreExpensive;
-            _view.CheaperButton.clicked += SelectCheaper;
+            _itemSequencePresenter = new ItemSequencePresenter(_model.ItemSequence, itemSequenceView, _uiAssetCollection);
+            _itemChoicePresenter = new ItemChoicePresenter(_model,  itemChoiceView);
+            
+            _itemSequencePresenter.Enable();
+            _itemChoicePresenter.Enable();
+
+            _model.OnSelected += HandleChoice;
         }
 
         public void Disable()
         {
-            _view.MoreExpensiveButton.clicked -= SelectMoreExpensive;
-            _view.CheaperButton.clicked -= SelectCheaper;
+            _itemSequencePresenter.Disable();
+            _itemChoicePresenter.Disable();
+            
+            _model.OnSelected -= HandleChoice;
         }
 
-        private void SelectMoreExpensive()
+        private async void HandleChoice(ItemChoice choice)
         {
-            var success = _model.ItemSequence.CurrentItem.Description.Worth <= _model.ItemSequence.NextItem.Description.Worth;
+            var success = IsCorrect(choice);
 
-            if (success)
-            {
-                _model.ItemSequence.Next();
-            }
-            else
+            if (!success)
             {
                 _model.Lose();
+                return;
             }
+
+            _model.LockInteraction();
+
+            await _itemChoicePresenter.HideAsync();
+            await _itemSequencePresenter.NextAsync();
+            await _itemChoicePresenter.ShowAsync();
+
+            _model.UnlockInteraction();
         }
 
-        private void SelectCheaper()
+        private bool IsCorrect(ItemChoice choice)
         {
-            var success = _model.ItemSequence.CurrentItem.Description.Worth >= _model.ItemSequence.NextItem.Description.Worth;
+            var currentWorth = _model.ItemSequence.CurrentItem.Description.Worth;
+            var nextWorth = _model.ItemSequence.NextItem.Description.Worth;
 
-            if (success)
+            return choice switch
             {
-                _model.ItemSequence.Next();
-            }
-            else
-            {
-                _model.Lose();
-            }
+                ItemChoice.MoreExpensive => currentWorth <= nextWorth,
+                ItemChoice.Cheaper => currentWorth >= nextWorth,
+                _ => false
+            };
         }
     }
 }

@@ -1,8 +1,10 @@
-using DoubleB.Runtime.Runtime.Descriptions;
+using Cysharp.Threading.Tasks;
+using DoubleB.Runtime.Runtime.Constants;
+using DoubleB.Runtime.Runtime.Core;
 using DoubleB.Runtime.Runtime.ViewDescriptions;
 using UnityEngine.UIElements;
 
-namespace DoubleB.Runtime.Gameplay
+namespace DoubleB.Runtime.Runtime.Gameplay.ItemSequence
 {
     public class ItemSequencePresenter : IPresenter
     {
@@ -40,13 +42,46 @@ namespace DoubleB.Runtime.Gameplay
                 _model.Items[i].Color.Value = _model.Description.GetViewColor(i);
                 presenter.Enable();
             }
+
+            _model.OnChange += UpdateActiveItemAnimations;
+            UpdateActiveItemAnimations();
         }
 
         public void Disable()
         {
+            _model.OnChange -= UpdateActiveItemAnimations;
+
             foreach (var presenter in _itemPresenters)
             {
                 presenter.Disable();
+            }
+        }
+
+        public async UniTask NextAsync()
+        {
+            _model.Next();
+
+            await UniTask.WhenAll(_itemPresenters.Select(x => x.WaitForAnimationAsync()));
+        }
+
+        private void UpdateActiveItemAnimations()
+        {
+            foreach (var presenter in _itemPresenters)
+            {
+                var isCurrent = ReferenceEquals(presenter.Model, _model.CurrentItem);
+                var isNext = ReferenceEquals(presenter.Model, _model.NextItem);
+                var role = ItemViewRole.None;
+
+                if (isCurrent)
+                {
+                    role = ItemViewRole.Current;
+                }
+                else if (isNext)
+                {
+                    role = ItemViewRole.Next;
+                }
+
+                presenter.SetRole(role);
             }
         }
     }

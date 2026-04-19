@@ -1,6 +1,7 @@
-using DoubleB.Runtime.Gameplay;
+using DoubleB.Runtime.Runtime.Gameplay;
+using DoubleB.Runtime.Runtime.Router;
 
-namespace DoubleB.Runtime
+namespace DoubleB.Runtime.Runtime.Common
 {
     public class GameModel
     {

@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using DoubleB.Runtime.Runtime.Descriptions;
 using UnityEngine;
 
-namespace DoubleB.Runtime.Gameplay
+namespace DoubleB.Runtime.Runtime.Descriptions
 {
     [CreateAssetMenu(fileName = "ItemSequenceDescription", menuName = "Description/ItemSequenceDescription")]
     public class ItemSequenceDescription : ScriptableObject
