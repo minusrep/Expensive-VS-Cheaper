@@ -10,8 +10,9 @@ namespace DoubleB.Runtime.Runtime.LoseMenu
         private readonly UIRouterModel _model;
         private readonly LoseMenuView _view;
 
-        private Button _openMainMenuButton;
-        private Button _continueGameplayButton;
+        private Button _continueForAdvButton;
+        private Button _exitToMainMenuButton;
+        private Button _restartButton;
         
         public LoseMenuPresenter(UIRouterModel model, LoseMenuView view)
         {
@@ -21,17 +22,17 @@ namespace DoubleB.Runtime.Runtime.LoseMenu
 
         public void Enable()
         {
-            _openMainMenuButton = _view.Root.Q<Button>(UIConstants.ExitButton);
-            _continueGameplayButton = _view.Root.Q<Button>(UIConstants.RetryButton);
+            _exitToMainMenuButton = _view.Root.Q<Button>(UIConstants.ExitButton);
+            _restartButton = _view.Root.Q<Button>(UIConstants.RetryButton);
                 
-            _openMainMenuButton.clicked += ExitButton;
-            _continueGameplayButton.clicked += RestartButton;
+            _exitToMainMenuButton.clicked += ExitButton;
+            _restartButton.clicked += RestartButton;
         }
 
         public void Disable()
         {
-            _openMainMenuButton.clicked -= ExitButton;
-            _continueGameplayButton.clicked -= RestartButton;
+            _exitToMainMenuButton.clicked -= ExitButton;
+            _restartButton.clicked -= RestartButton;
         }
 
         private void ExitButton()
