@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Cysharp.Threading.Tasks;
+using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Scripting;
 
@@ -81,8 +82,8 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
 #if UNITY_WEBGL && !UNITY_EDITOR
             var payload = await CallAsync((gameObjectName, callbackId) =>
                 YandexSDK_IsAvailableMethod(methodName, gameObjectName, callbackId));
-            var result = JsonUtility.FromJson<YandexSDKAvailableMethodResult>(payload);
-            return result != null && result.available;
+            var result = JsonConvert.DeserializeObject<YandexSDKAvailableMethodResult>(payload);
+            return result != null && result.Available;
 #else
             await UniTask.Yield();
             return true;
@@ -120,10 +121,10 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
         {
 #if UNITY_WEBGL && !UNITY_EDITOR
             var payload = await CallAsync(YandexSDK_ShowFullscreenAdv);
-            return JsonUtility.FromJson<YandexFullscreenAdResult>(payload);
+            return JsonConvert.DeserializeObject<YandexFullscreenAdResult>(payload);
 #else
             await UniTask.Yield();
-            return new YandexFullscreenAdResult { wasShown = false };
+            return new YandexFullscreenAdResult { WasShown = false };
 #endif
         }
 
@@ -131,10 +132,10 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
         {
 #if UNITY_WEBGL && !UNITY_EDITOR
             var payload = await CallAsync(YandexSDK_ShowRewardedVideo);
-            return JsonUtility.FromJson<YandexRewardedAdResult>(payload);
+            return JsonConvert.DeserializeObject<YandexRewardedAdResult>(payload);
 #else
             await UniTask.Yield();
-            return new YandexRewardedAdResult { wasShown = false, rewarded = true };
+            return new YandexRewardedAdResult { WasShown = false, Rewarded = true };
 #endif
         }
 
@@ -303,28 +304,28 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
         [Preserve]
         public void HandleYandexSDKCallback(string messageJson)
         {
-            var message = JsonUtility.FromJson<YandexSDKCallbackMessage>(messageJson);
-            if (message == null || string.IsNullOrEmpty(message.id))
+            var message = JsonConvert.DeserializeObject<YandexSDKCallbackMessage>(messageJson);
+            if (message == null || string.IsNullOrEmpty(message.Id))
             {
                 Debug.LogWarning($"Invalid Yandex SDK callback: {messageJson}");
                 return;
             }
 
-            if (!_requests.TryGetValue(message.id, out var completionSource))
+            if (!_requests.TryGetValue(message.Id, out var completionSource))
             {
-                Debug.LogWarning($"Yandex SDK callback request was not found: {message.id}");
+                Debug.LogWarning($"Yandex SDK callback request was not found: {message.Id}");
                 return;
             }
 
-            _requests.Remove(message.id);
+            _requests.Remove(message.Id);
 
-            if (message.success)
+            if (message.Success)
             {
-                completionSource.TrySetResult(message.payload);
+                completionSource.TrySetResult(message.Payload);
             }
             else
             {
-                completionSource.TrySetException(new InvalidOperationException(message.error));
+                completionSource.TrySetException(new InvalidOperationException(message.Error));
             }
         }
 

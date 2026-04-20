@@ -1,32 +1,40 @@
-using System;
+using Unity.Plastic.Newtonsoft.Json;
 
 namespace DoubleB.Runtime.Runtime.YandexSDK
 {
-    [Serializable]
     public sealed class YandexFullscreenAdResult
     {
-        public bool wasShown;
+        [JsonProperty("wasShown")]
+        public bool WasShown { get; set; }
     }
 
-    [Serializable]
     public sealed class YandexRewardedAdResult
     {
-        public bool wasShown;
-        public bool rewarded;
+        [JsonProperty("wasShown")]
+        public bool WasShown { get; set; }
+
+        [JsonProperty("rewarded")]
+        public bool Rewarded { get; set; }
     }
 
-    [Serializable]
     internal sealed class YandexSDKCallbackMessage
     {
-        public string id;
-        public bool success;
-        public string payload;
-        public string error;
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("success")]
+        public bool Success { get; set; }
+
+        [JsonProperty("payload")]
+        public string Payload { get; set; }
+
+        [JsonProperty("error")]
+        public string Error { get; set; }
     }
 
-    [Serializable]
     internal sealed class YandexSDKAvailableMethodResult
     {
-        public bool available;
+        [JsonProperty("available")]
+        public bool Available { get; set; }
     }
 }

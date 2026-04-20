@@ -36,7 +36,7 @@ namespace DoubleB.Runtime.Runtime.Gameplay
             _itemSequencePresenter.Enable();
             _itemChoicePresenter.Enable();
 
-            _model.OnSelected += HandleChoice;
+            _model.OnSelect += HandleChoice;
         }
 
         public void Disable()
@@ -44,7 +44,7 @@ namespace DoubleB.Runtime.Runtime.Gameplay
             _itemSequencePresenter.Disable();
             _itemChoicePresenter.Disable();
             
-            _model.OnSelected -= HandleChoice;
+            _model.OnSelect -= HandleChoice;
         }
 
         private async void HandleChoice(ItemChoice choice)
