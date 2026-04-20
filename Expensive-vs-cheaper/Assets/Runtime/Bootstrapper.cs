@@ -1,4 +1,3 @@
-using System;
 using Cysharp.Threading.Tasks;
 using DoubleB.Runtime.Runtime.Audio;
 using DoubleB.Runtime.Runtime.Common;
@@ -7,9 +6,9 @@ using DoubleB.Runtime.Runtime.Descriptions;
 using DoubleB.Runtime.Runtime.Gameplay;
 using DoubleB.Runtime.Runtime.Gameplay.ItemSequence;
 using DoubleB.Runtime.Runtime.Router;
+using DoubleB.Runtime.Runtime.Save;
 using DoubleB.Runtime.Runtime.ViewDescriptions;
 using DoubleB.Runtime.Runtime.YandexSDK;
-using UniRx;
 using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -28,6 +27,7 @@ namespace DoubleB.Runtime.Runtime
         
         private GameFlowPresenter _gameFlowPresenter;
         private AudioPresenter _audioPresenter;
+        private SavePresenter _savePresenter;
         
         private async void Start()
         {
@@ -46,10 +46,12 @@ namespace DoubleB.Runtime.Runtime
             
             _gameFlowPresenter = new GameFlowPresenter(gameModel);
             _audioPresenter = new AudioPresenter(gameModel, _audioView, _assetCollection.AudioAssetCollection);
+            _savePresenter = new SavePresenter(gameModel, yandexSDK);
 
             
             _gameFlowPresenter.Enable();
             _audioPresenter.Enable();
+            _savePresenter.Enable();
             uiRouter.Enable();
 
             await SetYandexLoadingReadyAsync(yandexSDK);
@@ -95,6 +97,11 @@ namespace DoubleB.Runtime.Runtime
             {
                 Debug.LogWarning($"Yandex SDK loading ready failed: {exception.Message}");
             }
+        }
+
+        private void OnDestroy()
+        {
+            _savePresenter?.Disable();
         }
     }
 }
