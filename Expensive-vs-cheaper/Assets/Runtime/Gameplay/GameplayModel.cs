@@ -6,18 +6,23 @@ namespace DoubleB.Runtime.Runtime.Gameplay
 {
     public class GameplayModel
     {
+        public event Action OnContinue;
         public event Action OnLose;
 
-        public event Action<ItemChoice> OnSelected;
+        public event Action OnScoreChange;
+        
+        public event Action<ItemChoice> OnSelect;
 
         public event Action<ItemChoiceResult> OnGetResult;
         
-        public event Action<bool> OnInteractionChanged;
+        public event Action<bool> OnInteractionChange;
         
         public ItemSequenceModel ItemSequence { get; set; }
         
         public bool CanInteract { get; private set; }
-        
+
+        public int Score { get;  private set; }
+
         public GameplayModel(ItemSequenceModel itemSequence)
         {
             ItemSequence = itemSequence;
@@ -26,6 +31,9 @@ namespace DoubleB.Runtime.Runtime.Gameplay
         public void Reset()
         {
             ItemSequence.Reset();
+            Score = 0;
+            
+            OnScoreChange?.Invoke();
         }
 
         public void Lose()
@@ -33,26 +41,38 @@ namespace DoubleB.Runtime.Runtime.Gameplay
             OnLose?.Invoke();
         }
 
+        public void Continue()
+        {
+            OnContinue?.Invoke();
+        }
+
         public void LockInteraction()
         {
             CanInteract = false;
-            OnInteractionChanged?.Invoke(CanInteract);
+            OnInteractionChange?.Invoke(CanInteract);
+        }
+
+        public void AddScore()
+        {
+            Score++;
+
+            OnScoreChange?.Invoke();
         }
 
         public void UnlockInteraction()
         {
             CanInteract = true;
-            OnInteractionChanged?.Invoke(CanInteract);
+            OnInteractionChange?.Invoke(CanInteract);
         }
 
         public void SelectMoreExpensive()
         {
-            OnSelected?.Invoke(ItemChoice.MoreExpensive);
+            OnSelect?.Invoke(ItemChoice.MoreExpensive);
         }
 
         public void SelectCheaper()
         {
-            OnSelected?.Invoke(ItemChoice.Cheaper);
+            OnSelect?.Invoke(ItemChoice.Cheaper);
         }
 
         public void RegisterResult(ItemChoiceResult result)

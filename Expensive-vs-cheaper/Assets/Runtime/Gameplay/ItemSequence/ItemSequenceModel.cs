@@ -22,7 +22,8 @@ namespace DoubleB.Runtime.Runtime.Gameplay.ItemSequence
 
         public void Reset()
         {
-            Items = new ItemModel[Description.Capacity];
+            CurrentItem.Description = Description.Items.GetRandom();
+            NextItem.Description = Description.Items.GetRandom();
         }
 
         public void Next()

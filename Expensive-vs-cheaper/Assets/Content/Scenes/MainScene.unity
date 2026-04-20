@@ -329,7 +329,7 @@ MonoBehaviour:
   _uiDocument: {fileID: 1185096336}
   _assetCollection: {fileID: 11400000, guid: 5d7f7aa8c1cf44245b62d83f453df693, type: 2}
   _descriptionCollection: {fileID: 11400000, guid: 4c0727eb286982f4c91bd4cccc66eadf, type: 2}
-  _audioView: {fileID: 0}
+  _audioView: {fileID: 1185096340}
 --- !u!82 &1185096339
 AudioSource:
   m_ObjectHideFlags: 0

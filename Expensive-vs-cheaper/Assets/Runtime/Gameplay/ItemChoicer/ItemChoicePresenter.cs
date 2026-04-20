@@ -21,25 +21,25 @@ namespace DoubleB.Runtime.Runtime.Gameplay.ItemChoicer
 
         public void Enable()
         {
-            _model.OnInteractionChanged += OnInteractionChanged;
+            _model.OnInteractionChange += OnInteractionChange;
             _view.SelectMoreExpensiveButton.clicked += SelectMoreExpensive;
             _view.SelectCheaperButton.clicked += SelectCheaper;
             
             _model.UnlockInteraction();
             
-            OnInteractionChanged(_model.CanInteract);
+            OnInteractionChange(_model.CanInteract);
         }
 
         public void Disable()
         {
-            _model.OnInteractionChanged -= OnInteractionChanged;
+            _model.OnInteractionChange -= OnInteractionChange;
             _view.SelectMoreExpensiveButton.clicked -= SelectMoreExpensive;
             _view.SelectCheaperButton.clicked -= SelectCheaper;
             DOTween.Kill(_view.SelectMoreExpensiveButton);
             DOTween.Kill(_view.SelectCheaperButton);
         }
 
-        private void OnInteractionChanged(bool newValue)
+        private void OnInteractionChange(bool newValue)
         {
             _view.SelectCheaperButton.SetEnabled(newValue);
             _view.SelectMoreExpensiveButton.SetEnabled(newValue);

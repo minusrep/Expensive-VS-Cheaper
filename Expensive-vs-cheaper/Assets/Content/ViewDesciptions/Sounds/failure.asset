@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7185f10185984fb58a724b481d7ace06, type: 3}
   m_Name: failure
   m_EditorClassIdentifier: DoubleB.Runtime::DoubleB.Runtime.Runtime.ViewDescriptions.AudioAsset
-  Id: click
-  Value: {fileID: 8300000, guid: 4fe5ac85c3155413ca46eab2ad0551c4, type: 3}
+  Id: failure
+  Value: {fileID: 8300000, guid: 482ea1e48fe304609b1c80e06168a2c1, type: 3}

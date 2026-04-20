@@ -6,6 +6,8 @@ namespace DoubleB.Runtime.Runtime.Router
     {
         public UIWindowRouterModel WindowRouterModel { get; private set; }
         public UIPopupRouterModel PopupRouterModel { get; private set; }
+
+        public event Action OnRewardedContinueRequested;
         
         public event Action OnRestartRequested;
 
@@ -25,6 +27,11 @@ namespace DoubleB.Runtime.Runtime.Router
         public void RequestExitToMainMenu()
         {
             OnExitToMainMenuRequested?.Invoke();
+        }
+
+        public void RequestRewardedContinue()
+        {
+            OnRewardedContinueRequested?.Invoke();
         }
     }
 }

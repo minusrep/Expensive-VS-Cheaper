@@ -15,7 +15,8 @@ namespace DoubleB.Runtime.Runtime.Gameplay
 
         private ItemSequencePresenter _itemSequencePresenter;
         private ItemChoicePresenter _itemChoicePresenter;
-
+        private ScorePresenter _scorePresenter;
+        
         public GameplayPresenter(GameplayModel model, GameplayView view, UIAssetCollection uiAssetCollection)
         {
             _model = model;
@@ -25,26 +26,28 @@ namespace DoubleB.Runtime.Runtime.Gameplay
 
         public void Enable()
         {
-            _model.Reset();
-            
             var itemSequenceView = new ItemSequenceView(_view.Root.Q<VisualElement>(UIConstants.Content));
             var itemChoiceView = new ItemChoiceView(_view.Root.Q<VisualElement>(UIConstants.Choicer));
+            var scoreView = new ScoreView(_view.Root.Q<VisualElement>(UIConstants.ScorePanel));
             
             _itemSequencePresenter = new ItemSequencePresenter(_model.ItemSequence, itemSequenceView, _uiAssetCollection);
             _itemChoicePresenter = new ItemChoicePresenter(_model,  itemChoiceView);
+            _scorePresenter = new ScorePresenter(_model, scoreView);
             
             _itemSequencePresenter.Enable();
             _itemChoicePresenter.Enable();
-
-            _model.OnSelected += HandleChoice;
+            _scorePresenter.Enable();
+            
+            _model.OnSelect += HandleChoice;
         }
 
         public void Disable()
         {
             _itemSequencePresenter.Disable();
             _itemChoicePresenter.Disable();
+            _scorePresenter.Disable();
             
-            _model.OnSelected -= HandleChoice;
+            _model.OnSelect -= HandleChoice;
         }
 
         private async void HandleChoice(ItemChoice choice)

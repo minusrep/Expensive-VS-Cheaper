@@ -16,6 +16,9 @@ namespace DoubleB.Runtime.Runtime.Constants
         public const string ExitButton = "exit-button";
         public const string RetryButton = "retry-button";
         public const string Choicer = "choicer";
+        public const string ScoreValue = "score-value";
+        public const string ScorePanel = "score-panel";
+        public const string ContinueButton = "continue-button";
 
         public static class Sounds
         {
