@@ -41,6 +41,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
 #if UNITY_WEBGL && !UNITY_EDITOR
                 return YandexSDK_IsInitialized() == 1;
 #else
+                LogEditorCall(nameof(IsInitialized));
                 return true;
 #endif
             }
@@ -64,6 +65,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
 #if UNITY_WEBGL && !UNITY_EDITOR
             return CallVoidAsync(YandexSDK_Init);
 #else
+            LogEditorCall(nameof(InitializeAsync));
             return UniTask.CompletedTask;
 #endif
         }
@@ -73,6 +75,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
 #if UNITY_WEBGL && !UNITY_EDITOR
             return YandexSDK_GetEnvironment();
 #else
+            LogEditorCall(nameof(GetEnvironmentJson));
             return "{\"app\":{\"id\":\"editor\"},\"i18n\":{\"lang\":\"ru\",\"tld\":\"ru\"}}";
 #endif
         }
@@ -85,6 +88,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
             var result = JsonConvert.DeserializeObject<YandexSDKAvailableMethodResult>(payload);
             return result != null && result.Available;
 #else
+            LogEditorCall(nameof(IsAvailableMethodAsync), $"methodName={methodName}");
             await UniTask.Yield();
             return true;
 #endif
@@ -95,6 +99,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
 #if UNITY_WEBGL && !UNITY_EDITOR
             return CallVoidAsync(YandexSDK_LoadingReady);
 #else
+            LogEditorCall(nameof(LoadingReadyAsync));
             return UniTask.CompletedTask;
 #endif
         }
@@ -104,6 +109,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
 #if UNITY_WEBGL && !UNITY_EDITOR
             return CallVoidAsync(YandexSDK_GameplayStart);
 #else
+            LogEditorCall(nameof(GameplayStartAsync));
             return UniTask.CompletedTask;
 #endif
         }
@@ -113,6 +119,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
 #if UNITY_WEBGL && !UNITY_EDITOR
             return CallVoidAsync(YandexSDK_GameplayStop);
 #else
+            LogEditorCall(nameof(GameplayStopAsync));
             return UniTask.CompletedTask;
 #endif
         }
@@ -123,6 +130,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
             var payload = await CallAsync(YandexSDK_ShowFullscreenAdv);
             return JsonConvert.DeserializeObject<YandexFullscreenAdResult>(payload);
 #else
+            LogEditorCall(nameof(ShowFullscreenAdAsync));
             await UniTask.Yield();
             return new YandexFullscreenAdResult { WasShown = false };
 #endif
@@ -134,6 +142,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
             var payload = await CallAsync(YandexSDK_ShowRewardedVideo);
             return JsonConvert.DeserializeObject<YandexRewardedAdResult>(payload);
 #else
+            LogEditorCall(nameof(ShowRewardedVideoAsync));
             await UniTask.Yield();
             return new YandexRewardedAdResult { WasShown = false, Rewarded = true };
 #endif
@@ -144,6 +153,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
 #if UNITY_WEBGL && !UNITY_EDITOR
             return CallAsync(YandexSDK_GetBannerAdvStatus);
 #else
+            LogEditorCall(nameof(GetBannerAdStatusJsonAsync));
             return UniTask.FromResult("{\"stickyAdvIsShowing\":false}");
 #endif
         }
@@ -153,6 +163,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
 #if UNITY_WEBGL && !UNITY_EDITOR
             return CallAsync(YandexSDK_ShowBannerAdv);
 #else
+            LogEditorCall(nameof(ShowBannerAdAsync));
             return UniTask.FromResult("{\"stickyAdvIsShowing\":false}");
 #endif
         }
@@ -162,6 +173,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
 #if UNITY_WEBGL && !UNITY_EDITOR
             return CallAsync(YandexSDK_HideBannerAdv);
 #else
+            LogEditorCall(nameof(HideBannerAdAsync));
             return UniTask.FromResult("{\"stickyAdvIsShowing\":false}");
 #endif
         }
@@ -171,6 +183,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
 #if UNITY_WEBGL && !UNITY_EDITOR
             return CallAsync(YandexSDK_GetPlayer);
 #else
+            LogEditorCall(nameof(GetPlayerJsonAsync));
             return UniTask.FromResult("{\"authorized\":true,\"id\":\"editor\",\"name\":\"Editor\"}");
 #endif
         }
@@ -180,6 +193,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
 #if UNITY_WEBGL && !UNITY_EDITOR
             return CallAsync(YandexSDK_OpenAuthDialog);
 #else
+            LogEditorCall(nameof(OpenAuthDialogAsync));
             return UniTask.FromResult("{\"authorized\":true}");
 #endif
         }
@@ -190,6 +204,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
             return CallAsync((gameObjectName, callbackId) =>
                 YandexSDK_GetPlayerData(keysJson ?? string.Empty, gameObjectName, callbackId));
 #else
+            LogEditorCall(nameof(GetPlayerDataJsonAsync), $"keysJson={keysJson ?? "null"}");
             return UniTask.FromResult("{}");
 #endif
         }
@@ -200,6 +215,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
             return CallVoidAsync((gameObjectName, callbackId) =>
                 YandexSDK_SetPlayerData(dataJson ?? "{}", flush ? 1 : 0, gameObjectName, callbackId));
 #else
+            LogEditorCall(nameof(SetPlayerDataAsync), $"flush={flush}, dataJson={dataJson ?? "null"}");
             return UniTask.CompletedTask;
 #endif
         }
@@ -210,6 +226,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
             return CallAsync((gameObjectName, callbackId) =>
                 YandexSDK_GetPlayerStats(keysJson ?? string.Empty, gameObjectName, callbackId));
 #else
+            LogEditorCall(nameof(GetPlayerStatsJsonAsync), $"keysJson={keysJson ?? "null"}");
             return UniTask.FromResult("{}");
 #endif
         }
@@ -220,6 +237,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
             return CallVoidAsync((gameObjectName, callbackId) =>
                 YandexSDK_SetPlayerStats(statsJson ?? "{}", gameObjectName, callbackId));
 #else
+            LogEditorCall(nameof(SetPlayerStatsAsync), $"statsJson={statsJson ?? "null"}");
             return UniTask.CompletedTask;
 #endif
         }
@@ -230,6 +248,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
             return CallAsync((gameObjectName, callbackId) =>
                 YandexSDK_IncrementPlayerStats(statsJson ?? "{}", gameObjectName, callbackId));
 #else
+            LogEditorCall(nameof(IncrementPlayerStatsAsync), $"statsJson={statsJson ?? "null"}");
             return UniTask.FromResult(statsJson ?? "{}");
 #endif
         }
@@ -240,6 +259,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
             return CallVoidAsync((gameObjectName, callbackId) =>
                 YandexSDK_SetLeaderboardScore(leaderboardName, score, extraData ?? string.Empty, gameObjectName, callbackId));
 #else
+            LogEditorCall(nameof(SetLeaderboardScoreAsync), $"leaderboardName={leaderboardName}, score={score}, extraData={extraData ?? "null"}");
             return UniTask.CompletedTask;
 #endif
         }
@@ -250,6 +270,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
             return CallAsync((gameObjectName, callbackId) =>
                 YandexSDK_GetLeaderboardEntries(leaderboardName, quantityTop, includeUser ? 1 : 0, gameObjectName, callbackId));
 #else
+            LogEditorCall(nameof(GetLeaderboardEntriesJsonAsync), $"leaderboardName={leaderboardName}, quantityTop={quantityTop}, includeUser={includeUser}");
             return UniTask.FromResult("{}");
 #endif
         }
@@ -259,6 +280,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
 #if UNITY_WEBGL && !UNITY_EDITOR
             return CallVoidAsync(YandexSDK_InitPayments);
 #else
+            LogEditorCall(nameof(InitializePaymentsAsync));
             return UniTask.CompletedTask;
 #endif
         }
@@ -268,6 +290,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
 #if UNITY_WEBGL && !UNITY_EDITOR
             return CallAsync(YandexSDK_GetCatalog);
 #else
+            LogEditorCall(nameof(GetCatalogJsonAsync));
             return UniTask.FromResult("[]");
 #endif
         }
@@ -278,6 +301,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
             return CallAsync((gameObjectName, callbackId) =>
                 YandexSDK_Purchase(productId, gameObjectName, callbackId));
 #else
+            LogEditorCall(nameof(PurchaseAsync), $"productId={productId}");
             return UniTask.FromResult("{\"productID\":\"" + productId + "\",\"purchaseToken\":\"editor\"}");
 #endif
         }
@@ -287,6 +311,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
 #if UNITY_WEBGL && !UNITY_EDITOR
             return CallAsync(YandexSDK_GetPurchases);
 #else
+            LogEditorCall(nameof(GetPurchasesJsonAsync));
             return UniTask.FromResult("[]");
 #endif
         }
@@ -297,6 +322,7 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
             return CallVoidAsync((gameObjectName, callbackId) =>
                 YandexSDK_ConsumePurchase(purchaseToken, gameObjectName, callbackId));
 #else
+            LogEditorCall(nameof(ConsumePurchaseAsync), $"purchaseToken={purchaseToken}");
             return UniTask.CompletedTask;
 #endif
         }
@@ -304,6 +330,8 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
         [Preserve]
         public void HandleYandexSDKCallback(string messageJson)
         {
+            LogEditorCall(nameof(HandleYandexSDKCallback), $"messageJson={messageJson}");
+
             var message = JsonConvert.DeserializeObject<YandexSDKCallbackMessage>(messageJson);
             if (message == null || string.IsNullOrEmpty(message.Id))
             {
@@ -331,6 +359,8 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
 
         private UniTask<string> CallAsync(Action<string, string> call)
         {
+            LogEditorCall(nameof(CallAsync));
+
             var id = (++_requestId).ToString();
             var completionSource = new UniTaskCompletionSource<string>();
 
@@ -342,7 +372,21 @@ namespace DoubleB.Runtime.Runtime.YandexSDK
 
         private async UniTask CallVoidAsync(Action<string, string> call)
         {
+            LogEditorCall(nameof(CallVoidAsync));
             await CallAsync(call);
+        }
+
+        private static void LogEditorCall(string methodName, string details = null)
+        {
+#if UNITY_EDITOR
+            if (string.IsNullOrEmpty(details))
+            {
+                Debug.Log($"[YandexSDKProvider][Editor] {methodName}");
+                return;
+            }
+
+            Debug.Log($"[YandexSDKProvider][Editor] {methodName}: {details}");
+#endif
         }
 
 #if UNITY_WEBGL && !UNITY_EDITOR

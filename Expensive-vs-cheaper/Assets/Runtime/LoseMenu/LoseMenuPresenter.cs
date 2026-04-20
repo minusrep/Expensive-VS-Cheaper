@@ -24,15 +24,18 @@ namespace DoubleB.Runtime.Runtime.LoseMenu
         {
             _exitToMainMenuButton = _view.Root.Q<Button>(UIConstants.ExitButton);
             _restartButton = _view.Root.Q<Button>(UIConstants.RetryButton);
+            _continueForAdvButton = _view.Root.Q<Button>(UIConstants.ContinueButton);
                 
             _exitToMainMenuButton.clicked += ExitButton;
             _restartButton.clicked += RestartButton;
+            _continueForAdvButton.clicked += ContinueButton;
         }
 
         public void Disable()
         {
             _exitToMainMenuButton.clicked -= ExitButton;
             _restartButton.clicked -= RestartButton;
+            _continueForAdvButton.clicked -= ContinueButton;
         }
 
         private void ExitButton()
@@ -43,6 +46,11 @@ namespace DoubleB.Runtime.Runtime.LoseMenu
         private void RestartButton()
         {
             _model.RequestRestart();
+        }
+
+        private void ContinueButton()
+        {
+            _model.RequestRewardedContinue();
         }
     }
 }

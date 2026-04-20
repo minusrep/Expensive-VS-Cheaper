@@ -10,6 +10,7 @@
             <ui:VisualElement name="lose-icon" class="lose-menu__icon">
                 <ui:Label text="+" name="lose-icon-cross" class="lose-menu__icon-cross"/>
             </ui:VisualElement>
+            <ui:Button text="ПРОДОЛЖИТЬ " name="continue-button" class="lose-menu__button lose-menu__button--retry"/>
             <ui:Button text="ПОПРОБОВАТЬ ЕЩЁ" name="retry-button" class="lose-menu__button lose-menu__button--retry"/>
             <ui:Button text="X ВЫХОД" name="exit-button" class="lose-menu__button lose-menu__button--exit"/>
         </ui:VisualElement>

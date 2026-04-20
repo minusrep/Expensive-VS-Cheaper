@@ -26,8 +26,6 @@ namespace DoubleB.Runtime.Runtime.Gameplay
 
         public void Enable()
         {
-            _model.Reset();
-            
             var itemSequenceView = new ItemSequenceView(_view.Root.Q<VisualElement>(UIConstants.Content));
             var itemChoiceView = new ItemChoiceView(_view.Root.Q<VisualElement>(UIConstants.Choicer));
             var scoreView = new ScoreView(_view.Root.Q<VisualElement>(UIConstants.ScorePanel));

@@ -46,7 +46,7 @@ namespace DoubleB.Runtime.Runtime
             
             var uiRouter = new UIRouterPresenter(gameModel, gameView,  _assetCollection.UIAssetCollection, _descriptionCollection);
             
-            _gameFlowPresenter = new GameFlowPresenter(gameModel);
+            _gameFlowPresenter = new GameFlowPresenter(gameModel, yandexSDK);
             _audioPresenter = new AudioPresenter(gameModel, _audioView, _assetCollection.AudioAssetCollection);
             _savePresenter = new SavePresenter(gameModel, yandexSDK);
             _advertisementPresenter = new AdvertisementPresenter(gameModel, yandexSDK);

@@ -1,7 +1,6 @@
 using System;
 using DoubleB.Runtime.Runtime.Gameplay.ItemChoicer;
 using DoubleB.Runtime.Runtime.Gameplay.ItemSequence;
-using UniRx;
 
 namespace DoubleB.Runtime.Runtime.Gameplay
 {
@@ -33,6 +32,8 @@ namespace DoubleB.Runtime.Runtime.Gameplay
         {
             ItemSequence.Reset();
             Score = 0;
+            
+            OnScoreChange?.Invoke();
         }
 
         public void Lose()
