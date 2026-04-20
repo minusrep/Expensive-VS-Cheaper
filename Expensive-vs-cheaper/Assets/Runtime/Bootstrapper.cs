@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using DoubleB.Runtime.Runtime.Audio;
 using DoubleB.Runtime.Runtime.Common;
 using DoubleB.Runtime.Runtime.Constants;
@@ -6,6 +7,7 @@ using DoubleB.Runtime.Runtime.Gameplay;
 using DoubleB.Runtime.Runtime.Gameplay.ItemSequence;
 using DoubleB.Runtime.Runtime.Router;
 using DoubleB.Runtime.Runtime.ViewDescriptions;
+using DoubleB.Runtime.Runtime.YandexSDK;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -22,8 +24,10 @@ namespace DoubleB.Runtime.Runtime
         private GameFlowPresenter _gameFlowPresenter;
         private AudioPresenter _audioPresenter;
         
-        private void Start()
+        private async void Start()
         {
+            await InitializeYandexSDKAsync();
+            
             var uiRouterModel = new UIRouterModel(UIConstants.Windows.MainMenu);
             var itemSequenceModel = new ItemSequenceModel(_descriptionCollection.ItemSequence);
             var gameplayModel = new GameplayModel(itemSequenceModel);
@@ -41,6 +45,22 @@ namespace DoubleB.Runtime.Runtime
             _gameFlowPresenter.Enable();
             _audioPresenter.Enable();
             uiRouter.Enable();
+            
+            InitializeYandexSDKAsync().Forget();
+        }
+
+        private async UniTask InitializeYandexSDKAsync()
+        {
+            try
+            {
+                var yandexSDK = YandexSDKProvider.Instance;
+                await yandexSDK.InitializeAsync();
+                await yandexSDK.LoadingReadyAsync();
+            }
+            catch (System.Exception exception)
+            {
+                Debug.LogWarning($"Yandex SDK initialization failed: {exception.Message}");
+            }
         }
     }
 }

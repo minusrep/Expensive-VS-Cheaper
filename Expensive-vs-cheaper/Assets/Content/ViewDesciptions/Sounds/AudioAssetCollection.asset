@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: DoubleB.Runtime::DoubleB.Runtime.Runtime.ViewDescriptions.AudioAssetCollection
   _viewDescriptions:
   - {fileID: 11400000, guid: d9784a59e707974458990bb49b69b72f, type: 2}
+  - {fileID: 11400000, guid: 3197f6634f9b4224c8e9877cec406632, type: 2}
+  - {fileID: 11400000, guid: f742ebe3dd082bf42b6b39efd071eec4, type: 2}
