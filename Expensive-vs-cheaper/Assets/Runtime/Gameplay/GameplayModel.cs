@@ -11,8 +11,6 @@ namespace DoubleB.Runtime.Runtime.Gameplay
 
         public event Action OnScoreChange;
         
-        public event Action OnHighScoreChange;
-        
         public event Action<ItemChoice> OnSelect;
 
         public event Action<ItemChoiceResult> OnGetResult;
@@ -24,9 +22,7 @@ namespace DoubleB.Runtime.Runtime.Gameplay
         public bool CanInteract { get; private set; }
 
         public int Score { get;  private set; }
-        
-        public int HighScore { get; private set; }
-        
+
         public GameplayModel(ItemSequenceModel itemSequence)
         {
             ItemSequence = itemSequence;
@@ -35,6 +31,7 @@ namespace DoubleB.Runtime.Runtime.Gameplay
         public void Reset()
         {
             ItemSequence.Reset();
+            Score = 0;
         }
 
         public void Lose()
@@ -52,12 +49,6 @@ namespace DoubleB.Runtime.Runtime.Gameplay
         {
             Score++;
 
-            if (HighScore < Score)
-            {
-                HighScore = Score;
-                OnHighScoreChange?.Invoke();
-            }
-            
             OnScoreChange?.Invoke();
         }
 

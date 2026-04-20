@@ -16,6 +16,7 @@ namespace DoubleB.Runtime.Runtime.Gameplay
         public void Enable()
         {
             _model.GameplayModel.OnLose += HandleLose;
+            _model.GameplayModel.OnScoreChange += HandleScoreChange;
             _model.UIRouterModel.OnRestartRequested += HandleRestartRequested;
             _model.UIRouterModel.OnExitToMainMenuRequested += HandleExitRequested;
         }
@@ -23,8 +24,17 @@ namespace DoubleB.Runtime.Runtime.Gameplay
         public void Disable()
         {
             _model.GameplayModel.OnLose -= HandleLose;
+            _model.GameplayModel.OnScoreChange -= HandleScoreChange;
             _model.UIRouterModel.OnRestartRequested -= HandleRestartRequested;
             _model.UIRouterModel.OnExitToMainMenuRequested -= HandleExitRequested;
+        }
+
+        private void HandleScoreChange()
+        {
+            if (_model.GameplayModel.Score > _model.PlayerData.HighScore.Value)
+            {
+                _model.PlayerData.HighScore.Value = _model.GameplayModel.Score;
+            }
         }
 
         private void HandleLose()
