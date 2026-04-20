@@ -7,6 +7,7 @@ namespace DoubleB.Runtime.Runtime.Gameplay
 {
     public class GameplayModel
     {
+        public event Action OnContinue;
         public event Action OnLose;
 
         public event Action OnScoreChange;
@@ -37,6 +38,11 @@ namespace DoubleB.Runtime.Runtime.Gameplay
         public void Lose()
         {
             OnLose?.Invoke();
+        }
+
+        public void Continue()
+        {
+            OnContinue?.Invoke();
         }
 
         public void LockInteraction()

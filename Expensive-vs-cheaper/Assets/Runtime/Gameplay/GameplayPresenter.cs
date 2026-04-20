@@ -15,7 +15,8 @@ namespace DoubleB.Runtime.Runtime.Gameplay
 
         private ItemSequencePresenter _itemSequencePresenter;
         private ItemChoicePresenter _itemChoicePresenter;
-
+        private ScorePresenter _scorePresenter;
+        
         public GameplayPresenter(GameplayModel model, GameplayView view, UIAssetCollection uiAssetCollection)
         {
             _model = model;
@@ -29,13 +30,16 @@ namespace DoubleB.Runtime.Runtime.Gameplay
             
             var itemSequenceView = new ItemSequenceView(_view.Root.Q<VisualElement>(UIConstants.Content));
             var itemChoiceView = new ItemChoiceView(_view.Root.Q<VisualElement>(UIConstants.Choicer));
+            var scoreView = new ScoreView(_view.Root.Q<VisualElement>(UIConstants.ScorePanel));
             
             _itemSequencePresenter = new ItemSequencePresenter(_model.ItemSequence, itemSequenceView, _uiAssetCollection);
             _itemChoicePresenter = new ItemChoicePresenter(_model,  itemChoiceView);
+            _scorePresenter = new ScorePresenter(_model, scoreView);
             
             _itemSequencePresenter.Enable();
             _itemChoicePresenter.Enable();
-
+            _scorePresenter.Enable();
+            
             _model.OnSelect += HandleChoice;
         }
 
@@ -43,6 +47,7 @@ namespace DoubleB.Runtime.Runtime.Gameplay
         {
             _itemSequencePresenter.Disable();
             _itemChoicePresenter.Disable();
+            _scorePresenter.Disable();
             
             _model.OnSelect -= HandleChoice;
         }
@@ -79,6 +84,58 @@ namespace DoubleB.Runtime.Runtime.Gameplay
                 ItemChoice.Cheaper => currentWorth >= nextWorth,
                 _ => false
             };
+        }
+    }
+
+    public class ScorePresenter : IPresenter
+    {
+        private readonly GameplayModel _model;
+        private readonly ScoreView _view;
+
+        public ScorePresenter(GameplayModel model, ScoreView view)
+        {
+            _model = model;
+            _view = view;
+        }
+
+        public void Enable()
+        {
+            _model.OnScoreChange += HandleScore;
+            _model.OnGetResult += HandleGetResult;
+            
+            HandleScore();
+        }
+
+        public void Disable()
+        {
+            _model.OnScoreChange -= HandleScore;
+            _model.OnGetResult -= HandleGetResult;
+        }
+
+        
+        private void HandleGetResult(ItemChoiceResult choiceResult)
+        {
+            if (choiceResult == ItemChoiceResult.Success)
+            {
+                _model.AddScore();
+            }            
+        }
+
+        private void HandleScore()
+        {
+            _view.Value.text = _model.Score.ToString();            
+        }
+    }
+    
+    public class ScoreView
+    {
+        public VisualElement Root { get; }
+        public TextElement Value { get; }
+        
+        public ScoreView(VisualElement root)
+        {
+            Root = root;
+            Value = root.Q<TextElement>(UIConstants.ScoreValue);
         }
     }
 }

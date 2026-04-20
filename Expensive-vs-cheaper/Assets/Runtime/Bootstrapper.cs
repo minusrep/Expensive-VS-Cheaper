@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using DoubleB.Runtime.Runtime.Advertisement;
 using DoubleB.Runtime.Runtime.Audio;
 using DoubleB.Runtime.Runtime.Common;
 using DoubleB.Runtime.Runtime.Constants;
@@ -28,6 +29,7 @@ namespace DoubleB.Runtime.Runtime
         private GameFlowPresenter _gameFlowPresenter;
         private AudioPresenter _audioPresenter;
         private SavePresenter _savePresenter;
+        private AdvertisementPresenter _advertisementPresenter;
         
         private async void Start()
         {
@@ -47,11 +49,12 @@ namespace DoubleB.Runtime.Runtime
             _gameFlowPresenter = new GameFlowPresenter(gameModel);
             _audioPresenter = new AudioPresenter(gameModel, _audioView, _assetCollection.AudioAssetCollection);
             _savePresenter = new SavePresenter(gameModel, yandexSDK);
-
+            _advertisementPresenter = new AdvertisementPresenter(gameModel, yandexSDK);
             
             _gameFlowPresenter.Enable();
             _audioPresenter.Enable();
             _savePresenter.Enable();
+            _advertisementPresenter.Enable();
             uiRouter.Enable();
 
             await SetYandexLoadingReadyAsync(yandexSDK);

@@ -16,7 +16,6 @@ namespace DoubleB.Runtime.Runtime.Gameplay
 
         public void Enable()
         {
-            _model.GameplayModel.OnGetResult += HandleChoiceResult;
             _model.GameplayModel.OnLose += HandleLose;
             _model.GameplayModel.OnScoreChange += HandleScoreChange;
             _model.UIRouterModel.OnRestartRequested += HandleRestartRequested;
@@ -25,7 +24,6 @@ namespace DoubleB.Runtime.Runtime.Gameplay
 
         public void Disable()
         {
-            _model.GameplayModel.OnGetResult -= HandleChoiceResult;
             _model.GameplayModel.OnLose -= HandleLose;
             _model.GameplayModel.OnScoreChange -= HandleScoreChange;
             _model.UIRouterModel.OnRestartRequested -= HandleRestartRequested;
@@ -54,16 +52,6 @@ namespace DoubleB.Runtime.Runtime.Gameplay
             {
                 _model.PlayerData.HighScore.Value = _model.GameplayModel.Score;
             }
-        }
-
-        private void HandleChoiceResult(ItemChoiceResult choiceResult)
-        {
-            if (choiceResult == ItemChoiceResult.Success)
-            {
-                _model.GameplayModel.AddScore();
-            }
-
-            Debug.Log($"HighScore: {_model.PlayerData.HighScore} | Score: {_model.GameplayModel.Score}");
         }
     }
 }
